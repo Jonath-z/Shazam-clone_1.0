@@ -14,11 +14,7 @@ const ObjectId = require('mongodb').ObjectId;
 const { emit } = require('process');
 const firestore = require('./routes/firebase.js');
 const welcome = require('./routes/welcome.js');
-// const firestore = require('firebase-admin');
-// firestore.initializeApp({
-//     credential: firestore.credential.cert(serviceAccount)
-// });
-// const serviceAccount = require("./serviceAccount.json");
+const response = require('./routes/shazam-response.js');
 
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { cors: { origin: "*" } });
@@ -44,7 +40,8 @@ app.use('/login', router);
 app.use('/', welcome);
 app.use('/signup', signup);
 app.use('/login', login);
-app.use('/shazam/',shazam);
+app.use('/shazam/', shazam);
+app.use('/shazam/response', response);
 
 function socket() {
     io.on('connection', (socket) => {
@@ -83,10 +80,11 @@ function socket() {
                                     }
                                     snapshot.forEach(doc => {
                                         socket.emit('shazam-result', response.data.result.spotify);
+                                        
                                         const shazam = {
                                             id: id,
                                             lyrics: response.data.result.lyrics,
-                                            artistName: response.data.result.artists,
+                                            artistName: response.data.result.spotify.artists[0].name,
                                             musicTitle: response.data.result.spotify.name,
                                             musicCover: response.data.result.spotify.album.images[1],
                                             albumName: response.data.result.spotify.album.name,
