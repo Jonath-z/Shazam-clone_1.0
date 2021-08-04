@@ -18,8 +18,15 @@ const firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 const fireDb = firebase.storage();
+const h3 = document.querySelector('.stateDesignation');
+const record = document.getElementById('record');
 
-const record = document.querySelector('.record');
+function recordTransform() {
+    record.style.transform = record.style.transform == "scale(0.95)" ? "scale(0.9)" : "scale(0.95)";
+    record.style.transition = "transform 1000ms";
+}
+setInterval(recordTransform, 1000);
+
 
 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     console.log('getUserMedia supported.');
@@ -36,16 +43,14 @@ if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
                 mediaRecorder.start();
                 console.log(mediaRecorder.state);
                 console.log("recorder started");
-                record.style.background = "red";
-                record.style.color = "black";
+                h3.innerHTML = "listening";
                 // console.log(stream);
 
                 function stopMediaRecorder() {
                     mediaRecorder.stop();
                     console.log(mediaRecorder.state);
                     console.log("recorder stopped");
-                    record.style.background = "";
-                    record.style.color = "";
+                    h3.innerHTML = "Tap to shazam";
                 }
                 setTimeout(stopMediaRecorder, 5000);
                 

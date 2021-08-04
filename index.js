@@ -13,6 +13,7 @@ const shazam = require('./routes/shazam.js');
 const ObjectId = require('mongodb').ObjectId;
 const { emit } = require('process');
 const firestore = require('./routes/firebase.js');
+const welcome = require('./routes/welcome.js');
 // const firestore = require('firebase-admin');
 // firestore.initializeApp({
 //     credential: firestore.credential.cert(serviceAccount)
@@ -32,12 +33,15 @@ const db = firestore.firestore();
 app.use(express.json());
 app.use(favicon(path.join(__dirname, './public', 'favicon.ico')));
 app.use('/static', express.static(path.join(__dirname, './src')));
+app.use('/statics', express.static(path.join(__dirname, './css')));
+app.use('/public', express.static(path.join(__dirname, './images')));
 app.set('view engine', 'ejs');
 app.set('socketio', io);
 app.set("views", path.join(__dirname, "views"));
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use('/', router);
+app.use('/login', router);
+app.use('/', welcome);
 app.use('/signup', signup);
 app.use('/login', login);
 app.use('/shazam/',shazam);
@@ -51,7 +55,7 @@ function socket() {
                 if (snapshot.empty) {
                     console.log("no data");
                 }
-                console.log(snapshot);
+                // console.log(snapshot);
                 snapshot.forEach(doc => {
                     db.collection("users").doc(doc.id).update({
                         "socketID": `${socket.id}`

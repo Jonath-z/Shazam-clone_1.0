@@ -1,0 +1,48 @@
+body{
+    margin: 0;
+    padding: 0;
+    background: #000;
+}
+header{
+    width: 100%;
+    display: inline-block;
+    /* flex-direction: row; */
+}
+h3{
+    color: white;
+    text-align: center;
+    font-family: sans-serif;
+}
+.imageContainer{
+    text-align: center;
+}
+#record{
+padding-top: 40%;
+}
+span{
+    color: white;
+}
+.fa-music{
+    color: white;
+}
+.userMusic{
+    float: left;
+    margin-left: 20px;
+    margin-top: 20px;
+}
+.charts{
+    float: right;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+.fa-chart-line{
+    color: white;
+}
+.searchContainer{
+    text-align: center;
+}
+.fa-search{
+    color: white;
+    /* font-size: 30px; */
+    margin-top: 30px;
+}

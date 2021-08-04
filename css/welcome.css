@@ -1,0 +1,11 @@
+body{
+    margin: 0;
+    padding: 0;
+    background: #000;
+}
+.imageContainer{
+    text-align: center;
+}
+.shazamWelcome{
+padding-top: 50%;
+}
