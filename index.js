@@ -15,6 +15,7 @@ const { emit } = require('process');
 const firestore = require('./routes/firebase.js');
 const welcome = require('./routes/welcome.js');
 const response = require('./routes/shazam-response.js');
+const library = require('./routes/library.js');
 
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { cors: { origin: "*" } });
@@ -42,6 +43,8 @@ app.use('/signup', signup);
 app.use('/login', login);
 app.use('/shazam/', shazam);
 app.use('/shazam/response', response);
+app.use('/library/', library);
+// app.use('/post/userid', library);
 
 function socket() {
     io.on('connection', (socket) => {
@@ -79,22 +82,42 @@ function socket() {
                                         console.log(err);
                                     }
                                     snapshot.forEach(doc => {
-                                        socket.emit('shazam-result', response.data.result.spotify);
+                                        if (response.data.result.spotify) {
+                                            socket.emit('shazam-album', response.data.result.spotify);
+                                            // socket.emit('lyrics', response.data.result.lyrics.lyrics);
+                                            // console.log(response.data.result.lyrics.lyrics);
+                                            const shazam = {
+                                                id: id,
+                                                lyrics: response.data.result.lyrics,
+                                                artistName: response.data.result.spotify.artists[0].name,
+                                                musicTitle: response.data.result.spotify.name,
+                                                musicCover: response.data.result.spotify.album.images[1],
+                                                albumName: response.data.result.spotify.album.name,
+                                                albumType: response.data.result.spotify.album.album_type,
+                                                musicUrl: response.data.result.spotify.album.external_urls.spotify,
+                                                releaseDate: response.data.result.spotify.album.release_date,
+                                                releaseDatePrecision: response.data.result.album.release_date_precision
+                                            }
                                         
-                                        const shazam = {
-                                            id: id,
-                                            lyrics: response.data.result.lyrics,
-                                            artistName: response.data.result.spotify.artists[0].name,
-                                            musicTitle: response.data.result.spotify.name,
-                                            musicCover: response.data.result.spotify.album.images[1],
-                                            albumName: response.data.result.spotify.album.name,
-                                            albumType: response.data.result.spotify.album.album_type,
-                                            musicUrl: response.data.result.spotify.album.external_urls.spotify,
-                                            releaseDate: response.data.result.spotify.album.release_date,
-                                            releaseDatePrecision: response.data.result.album.release_date_precision
+                                            mongodb.collection("users").insertOne(shazam);
                                         }
-                                        
-                                        mongodb.collection("users").insertOne(shazam);
+                                        if (!response.data.result.spotify) {
+                                            const name = `${response.data.result.artist}`;
+                                            const song = `${response.data.result.title}`;
+                                            const songLink = `${response.data.result.song_link}`;
+                                            const lyrics = `${response.data.result.lyrics.lyrics}`;
+                                            socket.emit('shazam-single', { name, song, songLink, lyrics });
+                                            socket.emit('lyrics', lyrics);
+                                            const shazam = {
+                                                artistName: name,
+                                                musicTitle: song,
+                                                musicUrl: songLink,
+                                                lyrics:lyrics 
+                                            }
+                                            mongodb.collection("users").insertOne(shazam);
+
+                                        }
+
                                        
                                         // console.log(doc.data().socketID + " soceket id ======> " + socket.id);
                                     });
@@ -112,8 +135,7 @@ function socket() {
          
         
         });
-
-        // const options = {
+                // const options = {
         //     method: 'GET',
         //     url: 'https://shazam.p.rapidapi.com/charts/track',
         //     params: { locale: 'en-US', pageSize: '20', startFrom: '0' },

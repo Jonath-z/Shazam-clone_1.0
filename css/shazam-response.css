@@ -5,17 +5,66 @@ body{
     width: 100%;
     height: 100%;
 }
+#shazamBody{
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    
+    /* filter: blur(40px);
+    -webkit-filter: blur(40px); */
+}
 .musicOption{
     display: grid;
     grid-template-columns: 1fr 4fr 1fr;
     justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    color: white;
+    background: linear-gradient(to bottom,black,rgba(0, 0, 0, 0));
+}
+.musicCoverDiv{
+    margin-top: 50px;
+    text-align: center;
+}
+#cover{
+    width: 300px;
+    border-radius: 10px;
+
 }
 .detailsContainer{
     margin-top: 0;
     position: absolute;
     width: 100%;
     bottom: 0;
-    height: 60%;
-    background: black;
+    height: 40%;
+    background: linear-gradient(to top,black,rgba(0, 0, 0, 0));
     color: white;
+    font-family: sans-serif;
+}
+.musicDetails{
+    margin-left: 20px;
+}
+.artistName{
+    color: rgb(100, 99, 99);
+    font-size: small;
+}
+.optionContainer{
+    text-align: center;
+    font-family: sans-serif;
+}
+.fa-share-alt,.fa-arrow-left{
+    margin-left: 20px;
+    font-family: sans-serif;
+}
+.playFullMusic{
+    text-align: center;
+    font-family: sans-serif;
+}
+.fullMusicButton{
+    border: none;
+    background: rgb(31, 30, 30);
+    color: white;
+    border-radius: 20px;
+    height: 30px;
+    width: 10em;
+    margin-top: 100px;
 }

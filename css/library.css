@@ -1,0 +1,132 @@
+body{
+    margin: 0;
+    padding: 0;
+    background: black;
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
+    color: white;
+    box-sizing: border-box;
+}
+h2{
+    font-family: sans-serif;
+    text-align: center;
+}
+.shazamContainer{
+    padding-left: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+}
+
+.shazamlibrary{
+    width: fit-content;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: rgb(31, 30, 30);
+    border-radius:10px ;
+}
+.fa-ellipsis-v{
+    float: right;
+    margin-bottom: 20px;
+    margin-right: 10px;
+}
+.musicCover{
+    width: 150px;
+    border-radius: 10px;
+}
+.tileAndArtist{
+    padding-left: 10px;
+    font-family: sans-serif;
+    font-size: 14px;
+}
+span{
+    font-size: small;
+    color: rgb(161, 161, 161);
+}
+.dialogOptionContainer{
+    display: flex;
+    flex-direction: column;
+}
+.hr{
+    color:rgb(31, 30, 30);
+    margin-left: 50px;
+    margin-right: 50px;
+}
+.option{
+    font-size: 14px;
+    font-family: sans-serif;
+    margin-left: 20px;
+}
+.fa-trash,.fa-share-alt,.fa-share{
+    margin-left: 20px;
+}
+#dialog{
+    width: 100%;
+    height: fit-content;
+}
+#dialogcontent{
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    background: rgba(0, 0, 0, 0);
+}
+#dialogBox{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
+    background: rgb(31, 30, 30);
+}
+.dialogImgContainer{
+    margin-left: 20px;
+    display: grid;
+    grid-template-columns: 0.5fr 2fr;
+}
+.dialogImg{
+    margin-top: 10px;
+    width: 50px;
+    border-radius: 10px;
+}
+.dialogPara{
+    margin-left: 20px;
+    font-family: sans-serif;
+}
+/* **************************media queries ************************************ */
+@media(max-width: 320px){
+    .shazamContainer{
+        padding-left: 2px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    .shazamlibrary{
+        margin-top: 10px;
+
+    }
+}
+
+@media(min-width: 360px){
+    .shazamContainer{
+        padding-left: 8px;
+    } 
+}
+
+@media(min-width: 375px){
+    .shazamContainer{
+        padding-left: 10px;
+    } 
+}
+
+@media(min-width: 414px){
+    .shazamContainer{
+        padding-left: 20px;
+    } 
+}
+
+

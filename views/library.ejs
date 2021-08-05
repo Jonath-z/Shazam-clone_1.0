@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/statics/library.css">
+    <link href="http://fonts.cdnfonts.com/css/mank-sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+</head>
+<body>
+    <h2>Library</h3>
+    <section class="shazamContainer">
+    <% data.reverse().forEach(shazam=> { %>
+     <%-`<div class="shazamlibrary"><img src="${shazam.musicCover.url}" alt="cover" class="musicCover"><p class="tileAndArtist">${shazam.musicTitle}<br><span>${shazam.artistName}</span></p><i class="fas fa-ellipsis-v"></i></div>` %>
+    <% }) %>
+    </section>
+    <section id="dialogcontent">
+    <section id="dialogBox">
+        <div class="dialogImgContainer">
+            <img src="" alt="cover" class="dialogImg">
+            <p class="dialogPara"></p>
+        </div>
+        <div class="dialogOptionContainer">
+            <div>
+                <p><i class="fas fa-trash"></i><span class="option">Remove form your library</span></p><hr class="hr">
+            </div>
+            <div>
+                <p><i class="fas fa-share-alt"></i><span class="option">Share</span></p><hr class="hr">
+            </div>
+            <div>
+                <p><i class="fas fa-share"></i><span class="option">View artist</span></p>
+            </div>
+        </div>
+    </section>
+</section>
+    <script src="/static/library.js"></script>
+</body>
+</html>

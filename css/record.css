@@ -12,13 +12,15 @@ h3{
     color: white;
     text-align: center;
     font-family: sans-serif;
+    margin-top: 100px;
 }
 .imageContainer{
     text-align: center;
 }
 #record{
-padding-top: 40%;
+margin-top: 20%;
 }
+
 span{
     color: white;
 }
