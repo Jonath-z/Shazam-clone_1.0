@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const favicon = require('serve-favicon');
 const axios = require('axios').default;
 const mongoose = require('mongoose');
+const musicxMatch = require('musixmatch-node');
 const router = require('./routes');
 const signup = require('./routes/signup.js');
 const login = require('./routes/login.js');
@@ -20,6 +21,9 @@ const library = require('./routes/library.js');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { cors: { origin: "*" } });
 
+// initialize musixMAtch 
+const Musixmatch = require('musixmatch-node')
+const mxm = new Musixmatch(`${process.env.MUSIX_MATCH_API_KEY}`);
 // database connection
 mongoose.connect(`${process.env.MONGO_DB}`, { useNewUrlParser: true, useUnifiedTopology: true });
 const mongodb = mongoose.connection;
@@ -61,73 +65,117 @@ function socket() {
                         "socketID": `${socket.id}`
                     });
 
-                    socket.on('audioURL', (url) => {
-                        console.log(url);
-                        var data = {
-                            'api_token': 'e2ba9ab8836fa4ff1853912d97858931',
-                            'url': `${url}`,
-                            'return': 'lyrics,apple_music,spotify',
+                    socket.on('song', (blob) => {
+                        console.log(blob);
+                        const buffer = blob;
+                        const base64 = buffer.toString('base64');
+                        // console.log(base64);
+                       
+                        const options = {
+                            method: 'POST',
+                            url: 'https://shazam.p.rapidapi.com/songs/detect',
+                            headers: {
+                                'content-type': 'text/plain',
+                                'x-rapidapi-key': '5d8653681dmshd89639507d3fd0ap13628fjsn37e488cc2c3e',
+                                'x-rapidapi-host': 'shazam.p.rapidapi.com'
+                            },
+                            data: `${base64}`
                         };
-                        axios({
-                            method: 'post',
-                            url: 'https://api.audd.io/',
-                            data: data,
-                            headers: { 'Content-Type': 'multipart/form-data' },
-                        })
-                            .then((response) => {
-                                console.log(response.data.result);
-                                async function getUserSocektID() {
-                                    const snapshot = await db.collection("users").where("id", "==", `${id}`).get();
-                                    if (snapshot.empty) {
-                                        console.log(err);
-                                    }
-                                    snapshot.forEach(doc => {
-                                        if (response.data.result.spotify) {
-                                            socket.emit('shazam-album', response.data.result.spotify);
-                                            // socket.emit('lyrics', response.data.result.lyrics.lyrics);
-                                            // console.log(response.data.result.lyrics.lyrics);
-                                            const shazam = {
-                                                id: id,
-                                                lyrics: response.data.result.lyrics,
-                                                artistName: response.data.result.spotify.artists[0].name,
-                                                musicTitle: response.data.result.spotify.name,
-                                                musicCover: response.data.result.spotify.album.images[1],
-                                                albumName: response.data.result.spotify.album.name,
-                                                albumType: response.data.result.spotify.album.album_type,
-                                                musicUrl: response.data.result.spotify.album.external_urls.spotify,
-                                                releaseDate: response.data.result.spotify.album.release_date,
-                                                releaseDatePrecision: response.data.result.album.release_date_precision
-                                            }
-                                        
-                                            mongodb.collection("users").insertOne(shazam);
-                                        }
-                                        if (!response.data.result.spotify) {
-                                            const name = `${response.data.result.artist}`;
-                                            const song = `${response.data.result.title}`;
-                                            const songLink = `${response.data.result.song_link}`;
-                                            const lyrics = `${response.data.result.lyrics.lyrics}`;
-                                            socket.emit('shazam-single', { name, song, songLink, lyrics });
-                                            socket.emit('lyrics', lyrics);
-                                            const shazam = {
-                                                artistName: name,
-                                                musicTitle: song,
-                                                musicUrl: songLink,
-                                                lyrics:lyrics 
-                                            }
-                                            mongodb.collection("users").insertOne(shazam);
+        
+                        axios.request(options).then(function (response) {
+                            console.log(response.data);
+                            console.log(response.data.track.hub.providers);
+                            
 
-                                        }
+                            async function getShazamLyrics() {
+                                const lyrics = await mxm.getLyricsMatcher({
+                                    q_track: `${shazam.musicTitle}`,
+                                    q_artist: `${shazam.artistName}`
+                                });
+                                const shazam = {
+                                    id: id,
+                                    artistName: response.data.track.subtitle,
+                                    musicTitle: response.data.track.title,
+                                    musicCover: response.data.track.images.background,
+                                    musicUrl: response.data.track.share.href,
+                                    lyrics: `${lyrics.message.body.lyrics.lyrics_body}`
+                                }
+                                socket.emit('shazam', shazam);
+                                mongodb.collection("users").insertOne(shazam);
+                            }
+                            getShazamLyrics();
+
+                        }).catch(function (error) {
+                            console.error(error);
+                        });
+
+
+
+                        // var data = {
+                        //     'api_token': 'e2ba9ab8836fa4ff1853912d97858931',
+                        //     'url': `${url}`,
+                        //     'return': 'lyrics,apple_music,spotify',
+                        // };
+                        // axios({
+                        //     method: 'post',
+                        //     url: 'https://api.audd.io/',
+                        //     data: data,
+                        //     headers: { 'Content-Type': 'multipart/form-data' },
+                        // })
+                            // .then((response) => {
+                            //     console.log(response.data.result);
+                            //     async function getUserSocektID() {
+                            //         const snapshot = await db.collection("users").where("id", "==", `${id}`).get();
+                            //         if (snapshot.empty) {
+                            //             console.log(err);
+                            //         }
+                            //         snapshot.forEach(doc => {
+                            //             if (response.data.result.spotify) {
+                            //                 socket.emit('shazam-album', response.data.result.spotify);
+                            //                 // socket.emit('lyrics', response.data.result.lyrics.lyrics);
+                            //                 // console.log(response.data.result.lyrics.lyrics);
+                            //                 const shazam = {
+                            //                     id: id,
+                            //                     lyrics: response.data.result.lyrics,
+                            //                     artistName: response.data.result.spotify.artists[0].name,
+                            //                     musicTitle: response.data.result.spotify.name,
+                            //                     musicCover: response.data.result.spotify.album.images[1],
+                            //                     albumName: response.data.result.spotify.album.name,
+                            //                     albumType: response.data.result.spotify.album.album_type,
+                            //                     musicUrl: response.data.result.spotify.album.external_urls.spotify,
+                            //                     releaseDate: response.data.result.spotify.album.release_date,
+                            //                     releaseDatePrecision: response.data.result.album.release_date_precision
+                            //                 }
+                                        
+                            //                 mongodb.collection("users").insertOne(shazam);
+                            //             }
+                            //             if (!response.data.result.spotify) {
+                            //                 const name = `${response.data.result.artist}`;
+                            //                 const song = `${response.data.result.title}`;
+                            //                 const songLink = `${response.data.result.song_link}`;
+                            //                 const lyrics = `${response.data.result.lyrics.lyrics}`;
+                            //                 socket.emit('shazam-single', { name, song, songLink, lyrics });
+                            //                 socket.emit('lyrics', lyrics);
+                            //                 const shazam = {
+                            //                     artistName: name,
+                            //                     musicTitle: song,
+                            //                     musicUrl: songLink,
+                            //                     lyrics:lyrics 
+                            //                 }
+                            //                 mongodb.collection("users").insertOne(shazam);
+
+                            //             }
 
                                        
-                                        // console.log(doc.data().socketID + " soceket id ======> " + socket.id);
-                                    });
-                                }
-                                getUserSocektID();
+                            //             // console.log(doc.data().socketID + " soceket id ======> " + socket.id);
+                            //         });
+                            //     }
+                            //     getUserSocektID();
                                 
-                            })
-                            .catch((error) => {
-                                console.log(error);
-                            });
+                            // })
+                            // .catch((error) => {
+                                // console.log(error);
+                            // });
                     });
                 });
 
