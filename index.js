@@ -85,22 +85,23 @@ function socket() {
                         axios.request(options).then(function (response) {
                             console.log(response.data);
                             console.log(response.data.track.hub.providers);
-                            
+                            const shazam = {
+                                id: id,
+                                artistName: response.data.track.subtitle,
+                                musicTitle: response.data.track.title,
+                                musicCover: response.data.track.images.background,
+                                musicUrl: response.data.track.share.href,
+                                // lyrics: `${lyrics.message.body.lyrics.lyrics_body}`
+                            }
 
                             async function getShazamLyrics() {
                                 const lyrics = await mxm.getLyricsMatcher({
                                     q_track: `${shazam.musicTitle}`,
                                     q_artist: `${shazam.artistName}`
                                 });
-                                const shazam = {
-                                    id: id,
-                                    artistName: response.data.track.subtitle,
-                                    musicTitle: response.data.track.title,
-                                    musicCover: response.data.track.images.background,
-                                    musicUrl: response.data.track.share.href,
-                                    lyrics: `${lyrics.message.body.lyrics.lyrics_body}`
-                                }
+
                                 socket.emit('shazam', shazam);
+                                console.log(lyrics.message.body);
                                 mongodb.collection("users").insertOne(shazam);
                             }
                             getShazamLyrics();

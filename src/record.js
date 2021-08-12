@@ -16,6 +16,7 @@ var input;
 const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioContext = new AudioContext;
 
+// ***********************************************FIREBASE*************************************************
 const firebaseConfig = {
     apiKey: "AIzaSyAYzdAVD2UWcBq7PPxa6tO8w3tLCjFxoLQ",
     authDomain: "shazam-clone.firebaseapp.com",
@@ -32,16 +33,16 @@ const fireDb = firebase.storage();
 
 const h3 = document.querySelector('.stateDesignation');
 const record = document.getElementById('record');
-
-function recordTransform() {
-    record.style.transform = record.style.transform == "scale(0.95)" ? "scale(0.9)" : "scale(0.95)";
-    record.style.transition = "transform 1000ms";
-}
-setInterval(recordTransform, 1000);
-
+//***********************************RECODING WITH RECODER.JS LIBRARY************************************************** */
 record.addEventListener('click', startRecording);
-
 function startRecording() {
+    h3.innerHTML = "Listening..."
+    function recordTransform() {
+        record.style.transform = record.style.transform == "scale(0.9)" ? "scale(0.95)" : "scale(0.9)";
+        record.style.transition = "transform 1000ms";
+    }
+    setInterval(recordTransform, 1000);
+
     audioContext.resume().then(() => {
         console.log('audio context resumed');
     })
@@ -88,179 +89,61 @@ function createDownloadLink(blob) {
 
 
 // ********************************** GET SHAZAM RESPONSE *******************************************************//
-socket.on('shazam', ({ artistName, musicTitle,musicCover,musicUrl,lyrics}) => {
-    // console.log(album, name, artists);
-            const user = {
-                id: userID,
-                shazam: {
-                    artistName: artistName,
-                    musicTitle: musicTitle,
-                    musicCover: musicCover,
-                    musicUrl:musicUrl
-                }
-            };
-            window.localStorage.setItem('user', JSON.stringify(user));
-            const userData = JSON.parse(localStorage.getItem('user'));
-            console.log(userData);
-        
-            window.open('../shazam/response', '_self').document.write(`
-                <!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-                    <link rel="stylesheet" href="/statics/shazam-response.css">
-                    <link href="http://fonts.cdnfonts.com/css/mank-sans" rel="stylesheet">
-                    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-                    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Shazam</title>
-                </head>
-                <body id="shazamBody">
-                    <section class="musicOption">
-                        <div class="arrowleft">
-                             <i class="fa fa-arrow-left" style="font-size:25px"></i>
-                        </div>
-                        <div class="optionContainer">
-                            <p class="option">SONG</p>
-                            <p class="option">LYRICS</p>
-                            <p class="option">ARTIST</p>
-                        </div>
-                        <div class="shareContainer">
-                        <i class="fa fa-share-alt" style="font-size:25px"></i>
-                        </div>
-                    </section>
-                    <section class="musicCover">
-                        <div class="musicCoverDiv">
-                            <img id="cover" src="${userData.shazam.musicCover}" alt="cover">
-                        </div>
-                    </section>
-                    <section class="detailsContainer">
-                        <div class="musicDetails">
-                            <h2>${userData.shazam.musicTitle}</h2>
-                            <p class="artistName">${userData.shazam.artistName}</p>
-                        </div>
-                        <div class="playFullMusic">
-                           <a href="${userData.shazam.musicUrl}"><button class="fullMusicButton">PLAY FULL SONG</button></a>
-                        </div>
-                    </section>
-                    <section id="lyricsContainer">
-                    
-                    </section>
-                    <section id="artistContainer">
-                    <div id="artistImg">
-                    <img src="${userData.shazam.musicCover}" alt="artist image" id="artistImage">
-                    </div>
-                    <p id="trackParagraph">In your library</p>
-                    <hr>
-                    <div id="musicShazamInLibrary">
-                    <p>${lyrics}</p>
-                    </div>
-                    </section>
-                    <script src="/static/shazam-response.js"></script>
-                    <script>
-                        const body = document.getElementById('shazamBody');
-                        body.style.background = "url('${userData.shazam.musicCover}')";
-                        body.style.backgroundSize = "100% 100vh";
-                        body.style.backgroundRepeat = "no-repeat";
-                        body.style.backgroundAttachement = "fixed";
-                        body.style.backgroundPosition = "center";
-                        // body.style.backDrop = "blur(10px)";
-                    </script>
-                </body>
-                </html>
-            `);
-            h3.innerHTML = "Tap to shazam";
-    
+const musicCoverNode = document.getElementById('cover');
+const musicTitleNode = document.getElementById('titleNode');
+const musicArtistNameNode = document.querySelector('.artistName');
+const musicUrlNode = document.getElementById('musicUrlNode');
+const lyricscontainerNode = document.getElementById('lyricsPara');
+const artistContainerNode = document.getElementById('artistContainer');
+const artistImageNode = document.getElementById('artistImage');
+const musicShazamLybrary = document.getElementById('musicShazamInLibrary');
+const shazamResponseSection = document.getElementById('shazamResponse');
+const welcomeNode = document.getElementById('ShazamWelcome');
 
+socket.on('shazam', ({ artistName, musicTitle, musicCover, musicUrl, lyrics }) => {
+    // console.log(album, name, artists);
+    const user = {
+        id: userID,
+        shazam: {
+            artistName: artistName,
+            musicTitle: musicTitle,
+            musicCover: musicCover,
+            musicUrl: musicUrl,
+            lyrics: lyrics
+        }
+    };
+    window.localStorage.setItem('user', JSON.stringify(user));
+    const userData = JSON.parse(localStorage.getItem('user'));
+    console.log(userData);
+    // set shazam response background
+    // shazamResponseSection.setAttribute('style', `background-image: url("${userData.shazam.musicCover}");
+    // background-repeat: no-repeat; background-size: cover;background: linear-gradient(to top,black,rgba(0, 0, 0, 0));`)
+    // set music cover
+    musicCoverNode.src = `${userData.shazam.musicCover}`;
+    // set music title && name
+    musicTitleNode.innerHTML = `${userData.shazam.musicTitle}`;
+    musicArtistNameNode.innerHTML = `${userData.shazam.artistName}`;
+    // set lyrics
+    lyricscontainerNode.innerHTML = `${userData.shazam.lyrics}`;
+    //set artist image container 
+    artistImageNode.src = `${userData.shazam.musicCover}`;
+    // shazamResponseSection.style.
+    shazamResponseSection.hidden = "false";
+    welcomeNode.hidden = "true";
+    shazamResponseSection.style.display = "block";
+
+    window.navigator.vibrate([200, 200]);
+    
+    h3.innerHTML = "Tap to shazam";
 });
 
-// *********************************************get lyrics ***********************************************************//
-// const lyricsContainer = document.getElementById('lyricsContainer');
-// socket.on('lyrics', lyrics => {
-//     const lyricsResult = {
-//         id: userID,
-//         lyrics : lyrics
-//     }
-//     window.localStorage.setItem('user', JSON.stringify(lyricsResult));
-//     const shazamLyrics = JSON.parse(localStorage.getItem('lyricsResult'));
-//     lyricsContainer.style.display = "block";
-//     const p = document.createElement('p');
-//     p.classList = "lyrics";
-//     p.style.textAlign = "center";
-//     const finalLyrics = shazamLyrics.lyrics.replaceAll('/\n', '<br>');
-//     p.innerHTML = `${finalLyrics}`;
-//     console.log(lyrics);
-// });
-
-
-
-// socket.on('shazam-single', ({ name, song, songLink }) => {
-//     const user = {
-//         id: userID,
-//         shazam: {
-//             name: name,
-//             songTitle: song,
-//             songLink: songLink,
-//         }
-//     };
-//     window.localStorage.setItem('user', JSON.stringify(user));
-//     const userData = JSON.parse(localStorage.getItem('user'));
-//     console.log(userData);
-//     const shazamResponseWindow = window.open('../shazam/response', '_self').document.write(`
-//                 <!DOCTYPE html>
-//                 <html lang="en">
-//                 <head>
-//                     <meta charset="UTF-8">
-//                     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-//                     <link rel="stylesheet" href="/statics/shazam-response.css">
-//                     <link href="http://fonts.cdnfonts.com/css/mank-sans" rel="stylesheet">
-//                     <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
-//                     <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
-//                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//                     <title>Shazam</title>
-//                 </head>
-//                 <body id="shazamBody">
-//                     <section class="musicOption">
-//                         <div class="arrowleft">
-//                              <i class="fa fa-arrow-left" style="font-size:25px"></i>
-//                         </div>
-//                         <div class="optionContainer">
-//                         </div>
-//                         <div class="shareContainer">
-//                         <i class="fa fa-share-alt" style="font-size:25px"></i>
-//                         </div>
-//                     </section>
-//                     <section class="musicCover">
-//                         <div class="musicCoverDiv">
-//                             <img id="cover" src="/public/default-music.jpg" alt="cover">
-//                         </div>
-//                     </section>
-//                     <section class="detailsContainer">
-//                         <div class="musicDetails">
-//                             <h2>${userData.shazam.songTitle}</h2>
-//                             <p class="artistName">${userData.shazam.name}</p>
-//                         </div>
-//                         <div class="playFullMusic">
-//                            <a href="${userData.shazam.songLink}"><button class="fullMusicButton">PLAY FULL SONG</button></a>
-//                         </div>
-//                     </section>
-//                     <script src="/static/shazam-response.js"></script>
-//                     <script src="/static/record.js"></script>
-
-//                     <script>
-//                         const body = document.getElementById('shazamBody');
-//                         body.style.backgroundImage = "url('/public/default-music.jpg')";
-//                         body.style.backgroundRepeat = "no-repeat";
-//                         body.style.backgroundPositionY = "50px";
-//                         body.style.backDrop = "blur(10px)";
-//                     </script>
-//                 </body>
-//                 </html>
-//         `);
-//     h3.innerHTML = "Tap to shazam";
-
-// });
+const arrowleft = document.querySelector('.fa-arrow-left');
+arrowleft.addEventListener('click', () => {
+    console.log(arrowleft);
+    shazamResponseSection.hidden = "true";
+    shazamResponseSection.style.display = "none";
+    welcomeNode.hidden = "false";
+});
 
 const library = document.querySelector('.fa-music');
 library.addEventListener('click', () => {
