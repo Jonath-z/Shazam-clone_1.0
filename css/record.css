@@ -34,9 +34,12 @@ margin-top: 20%;
 
 span{
     color: white;
+    font-family: sans-serif;
+    /* background: rgb(rgb(238, 44, 44), rgb(128, 0, 0), rgb(251, 21, 21)); */
 }
 .fa-music{
     color: white;
+
 }
 .userMusic{
     float: left;

@@ -1,0 +1,103 @@
+body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background: black;
+    overflow-y: scroll;
+}
+#chartH2{
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+    font-family: sans-serif;
+}
+.arrowleft,.shareContainer{
+    z-index: 4;
+}
+.fa-share-alt,.fa-arrow-left{
+    margin-left: 20px;
+    font-family: sans-serif;
+}
+#chartTracksContainer{
+    padding-left: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+}
+.chartDiv{
+    width: 150px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: rgb(31, 30, 30);
+    border-radius:10px ;
+    max-height: 251px;
+    min-height: 215px;
+}
+.chartImage{
+    width: 150px;
+    border-radius: 10px;
+}
+.url{
+    display: none;
+}
+.chartTitle{
+    padding-left: 10px;
+    font-family: sans-serif;
+    font-size: 14px;
+    color: white;
+}
+.chartSubTitle{
+    font-size: small;
+    color: rgb(161, 161, 161);
+    overflow: hidden;
+    margin-top: -10px;
+    margin-left: 10px;
+    font-family: sans-serif;
+}
+#TracksShazamContainer{
+    display: none;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    z-index: 1;
+    margin:0;
+    padding: 0;
+}
+
+/* ******************************** media queries************************************************* */
+@media(max-width: 320px){
+    #chartTracksContainer{
+        padding-left: 2px;
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+    .chartDiv{
+        margin-top: 10px;
+
+    }
+}
+
+@media(min-width: 360px){
+    #chartTracksContainer{
+        padding-left: 8px;
+    } 
+}
+
+@media(min-width: 375px){
+    #chartTracksContainer{
+        padding-left: 10px;
+    } 
+}
+
+@media(min-width: 414px){
+    #chartTracksContainer{
+        padding-left: 20px;
+    } 
+}

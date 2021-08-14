@@ -17,6 +17,8 @@ const firestore = require('./routes/firebase.js');
 const welcome = require('./routes/welcome.js');
 const response = require('./routes/shazam-response.js');
 const library = require('./routes/library.js');
+const chart = require('./routes/chart.js');
+const remove = require('./routes/remove.js');
 
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { cors: { origin: "*" } });
@@ -48,7 +50,8 @@ app.use('/login', login);
 app.use('/shazam/', shazam);
 app.use('/shazam/response', response);
 app.use('/library/', library);
-// app.use('/post/userid', library);
+app.use('/tracks/', chart);
+app.use('/remove', remove);
 
 function socket() {
     io.on('connection', (socket) => {
@@ -84,7 +87,7 @@ function socket() {
         
                         axios.request(options).then(function (response) {
                             console.log(response.data);
-                            console.log(response.data.track.hub.providers);
+                            console.log(response.data.track.artists);
                             const shazam = {
                                 id: id,
                                 artistName: response.data.track.subtitle,
@@ -93,90 +96,30 @@ function socket() {
                                 musicUrl: response.data.track.share.href,
                                 // lyrics: `${lyrics.message.body.lyrics.lyrics_body}`
                             }
-
-                            async function getShazamLyrics() {
-                                const lyrics = await mxm.getLyricsMatcher({
-                                    q_track: `${shazam.musicTitle}`,
-                                    q_artist: `${shazam.artistName}`
-                                });
-
-                                socket.emit('shazam', shazam);
-                                console.log(lyrics.message.body);
-                                mongodb.collection("users").insertOne(shazam);
-                            }
-                            getShazamLyrics();
+                            socket.emit('shazam', shazam);
+                            mongodb.collection("users").insertOne(shazam);
+                            // getShazamLyrics();
 
                         }).catch(function (error) {
                             console.error(error);
                         });
-
-
-
-                        // var data = {
-                        //     'api_token': 'e2ba9ab8836fa4ff1853912d97858931',
-                        //     'url': `${url}`,
-                        //     'return': 'lyrics,apple_music,spotify',
-                        // };
-                        // axios({
-                        //     method: 'post',
-                        //     url: 'https://api.audd.io/',
-                        //     data: data,
-                        //     headers: { 'Content-Type': 'multipart/form-data' },
-                        // })
-                            // .then((response) => {
-                            //     console.log(response.data.result);
-                            //     async function getUserSocektID() {
-                            //         const snapshot = await db.collection("users").where("id", "==", `${id}`).get();
-                            //         if (snapshot.empty) {
-                            //             console.log(err);
-                            //         }
-                            //         snapshot.forEach(doc => {
-                            //             if (response.data.result.spotify) {
-                            //                 socket.emit('shazam-album', response.data.result.spotify);
-                            //                 // socket.emit('lyrics', response.data.result.lyrics.lyrics);
-                            //                 // console.log(response.data.result.lyrics.lyrics);
-                            //                 const shazam = {
-                            //                     id: id,
-                            //                     lyrics: response.data.result.lyrics,
-                            //                     artistName: response.data.result.spotify.artists[0].name,
-                            //                     musicTitle: response.data.result.spotify.name,
-                            //                     musicCover: response.data.result.spotify.album.images[1],
-                            //                     albumName: response.data.result.spotify.album.name,
-                            //                     albumType: response.data.result.spotify.album.album_type,
-                            //                     musicUrl: response.data.result.spotify.album.external_urls.spotify,
-                            //                     releaseDate: response.data.result.spotify.album.release_date,
-                            //                     releaseDatePrecision: response.data.result.album.release_date_precision
-                            //                 }
-                                        
-                            //                 mongodb.collection("users").insertOne(shazam);
-                            //             }
-                            //             if (!response.data.result.spotify) {
-                            //                 const name = `${response.data.result.artist}`;
-                            //                 const song = `${response.data.result.title}`;
-                            //                 const songLink = `${response.data.result.song_link}`;
-                            //                 const lyrics = `${response.data.result.lyrics.lyrics}`;
-                            //                 socket.emit('shazam-single', { name, song, songLink, lyrics });
-                            //                 socket.emit('lyrics', lyrics);
-                            //                 const shazam = {
-                            //                     artistName: name,
-                            //                     musicTitle: song,
-                            //                     musicUrl: songLink,
-                            //                     lyrics:lyrics 
-                            //                 }
-                            //                 mongodb.collection("users").insertOne(shazam);
-
-                            //             }
-
-                                       
-                            //             // console.log(doc.data().socketID + " soceket id ======> " + socket.id);
-                            //         });
-                            //     }
-                            //     getUserSocektID();
-                                
-                            // })
-                            // .catch((error) => {
-                                // console.log(error);
-                            // });
+                        socket.on('lyrics-parameters', ({ artist, song }) => {
+                            const options = {
+                                method: 'GET',
+                                url: 'https://sridurgayadav-chart-lyrics-v1.p.rapidapi.com/apiv1.asmx/SearchLyricDirect',
+                                params: { artist: `${artist}`, song: `${song}` },
+                                headers: {
+                                    'x-rapidapi-key': '5d8653681dmshd89639507d3fd0ap13628fjsn37e488cc2c3e',
+                                    'x-rapidapi-host': 'sridurgayadav-chart-lyrics-v1.p.rapidapi.com'
+                                }
+                            };
+                          
+                            axios.request(options).then(function (response) {
+                                console.log(response.data);
+                            }).catch(function (error) {
+                                console.error(error);
+                            });
+                        });
                     });
                 });
 
@@ -184,7 +127,7 @@ function socket() {
          
         
         });
-                // const options = {
+        // const options = {
         //     method: 'GET',
         //     url: 'https://shazam.p.rapidapi.com/charts/track',
         //     params: { locale: 'en-US', pageSize: '20', startFrom: '0' },

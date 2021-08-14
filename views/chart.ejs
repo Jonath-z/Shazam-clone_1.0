@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/statics/shazam-response.css">
+    <link rel="stylesheet" href="/statics/chart.css">
+    <link href="http://fonts.cdnfonts.com/css/mank-sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chart</title>
+</head>
+<body>
+    <h2 id="chartH2">Chart</h2>
+    <section id="chartTracksContainer">
+        <% data.forEach(chart => { %>
+         <%- `<div class="chartDiv"><img src="${chart.images.background}" alt="cover" class="chartImage"><br><p class="chartTitle">${chart.title}</p><p class="chartSubTitle">${chart.subtitle}</p><p class="url">${chart.url}</p></div>` %> 
+        <% }) %>
+    </section>
+    <section id="TracksShazamContainer">
+        <section class="musicOption">
+            <div class="arrowleft">
+                <i class="fa fa-arrow-left" style="font-size:25px"></i>
+            </div>
+            <div class="optionContainer">
+                <p class="option optionSong">SONG</p>
+                <p class="option optionLyrics">LYRICS</p>
+                <p class="option optionArtist">ARTIST</p>
+            </div>
+            <div class="shareContainer">
+                 <i class="fa fa-share-alt" style="font-size:25px"></i>
+            </div>
+        </section>
+        <section class="musicCover">
+            <div class="musicCoverDiv">
+                <img id="cover" src="" alt="cover">
+            </div>
+        </section>
+        <section class="detailsContainer">
+            <div class="musicDetails">
+                <h2 id="titleNode"></h2>
+                <p class="artistName"></p>
+            </div>
+            <div class="playFullMusic">
+                <a id="musicUrlNode" href=""><button class="fullMusicButton">PLAY FULL SONG</button></a>
+            </div>
+        </section>
+        <section id="lyricsContainer">
+            <p id="lyricsPara"></p>
+        </section>
+        <section id="artistContainer" hidden>
+            <div id="artistImg">
+                <img src="" alt="artist image" id="artistImage">
+                <h4 class="artistNameh4"></h4>
+            </div>
+                 <!-- <p id="trackParagraph">In your library</p> -->
+                <!-- <hr> -->
+            <!-- <div id="musicShazamInLibrary"> -->
+                <!-- <p></p> -->
+            <!-- </div> -->
+    </section>
+
+    <script src="/static/chart.js"></script>
+</body>
+</html>

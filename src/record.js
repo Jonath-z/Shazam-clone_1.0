@@ -99,6 +99,11 @@ const artistImageNode = document.getElementById('artistImage');
 const musicShazamLybrary = document.getElementById('musicShazamInLibrary');
 const shazamResponseSection = document.getElementById('shazamResponse');
 const welcomeNode = document.getElementById('ShazamWelcome');
+const songOption = document.querySelector('.optionSong');
+const lyricsOption = document.querySelector('.optionLyrics');
+const artistOption = document.querySelector('.optionArtist');
+const h4ArtistName = document.querySelector('.artistNameh4');
+
 
 socket.on('shazam', ({ artistName, musicTitle, musicCover, musicUrl, lyrics }) => {
     // console.log(album, name, artists);
@@ -115,28 +120,55 @@ socket.on('shazam', ({ artistName, musicTitle, musicCover, musicUrl, lyrics }) =
     window.localStorage.setItem('user', JSON.stringify(user));
     const userData = JSON.parse(localStorage.getItem('user'));
     console.log(userData);
-    // set shazam response background
-    // shazamResponseSection.setAttribute('style', `background-image: url("${userData.shazam.musicCover}");
-    // background-repeat: no-repeat; background-size: cover;background: linear-gradient(to top,black,rgba(0, 0, 0, 0));`)
-    // set music cover
-    musicCoverNode.src = `${userData.shazam.musicCover}`;
-    // set music title && name
-    musicTitleNode.innerHTML = `${userData.shazam.musicTitle}`;
-    musicArtistNameNode.innerHTML = `${userData.shazam.artistName}`;
-    // set lyrics
-    lyricscontainerNode.innerHTML = `${userData.shazam.lyrics}`;
-    //set artist image container 
-    artistImageNode.src = `${userData.shazam.musicCover}`;
-    // shazamResponseSection.style.
-    shazamResponseSection.hidden = "false";
-    welcomeNode.hidden = "true";
-    shazamResponseSection.style.display = "block";
-
-    window.navigator.vibrate([200, 200]);
+    //*************************************emit lyrics parameters******************************************* */
+    socket.emit('lyrics-parameters', { artist: userData.shazam.artistName, song: userData.shazam.musicTitle });
+    songOption.setAttribute('style', 'background:rgb(238, 44, 44);');
+    function songDesplay() {
+        musicCoverNode.src = `${userData.shazam.musicCover}`;
+        // set music title && name
+        musicTitleNode.innerHTML = `${userData.shazam.musicTitle}`;
+        musicArtistNameNode.innerHTML = `${userData.shazam.artistName}`;
+        h4ArtistName.innerHTML = `${userData.shazam.artistName}`;
+        musicUrlNode.href = `${userData.shazam.artistName}`
+        // set lyrics
+        lyricscontainerNode.innerHTML = `${userData.shazam.lyrics}`;
+        //set artist image container 
+        artistImageNode.src = `${userData.shazam.musicUrl}`;
+        // shazamResponseSection.style.
+        shazamResponseSection.hidden = "false";
+        welcomeNode.hidden = "true";
+        shazamResponseSection.style.display = "block";
     
-    h3.innerHTML = "Tap to shazam";
+        window.navigator.vibrate([200, 200]);
+    
+        h3.innerHTML = "Tap to shazam";
+    }
+    songDesplay();
+    record.style.transform = "none";
+
 });
 
+// *************************************song option click event******************************************************//
+songOption.addEventListener('click', () => {
+    artistContainerNode.style.display = "none";
+    lyricsOption.setAttribute('style', 'background:transprent;');
+    artistOption.setAttribute('style', 'background:transprent;');
+    // artistOption.hidden = "true";
+    songOption.setAttribute('style', 'background:rgb(238, 44, 44);');
+    // songOption.hidden = "true";
+});
+// *********************************** artist option click event ***************************************************//
+artistOption.addEventListener('click', () => {
+    artistOption.setAttribute('style', 'background:rgb(238, 44, 44);');
+    songOption.setAttribute('style', 'background:transprent;');
+    // songOption.hidden = "true"
+    artistContainerNode.style.display = "block";
+    shazamResponseSection.hidden = "false";
+    shazamResponseSection.style.display = "block";
+    lyricsOption.setAttribute('style', 'background:transprent;');
+    // lyricsOption.hidden = "true"
+});
+// *************************************arrow left event******************************************************//
 const arrowleft = document.querySelector('.fa-arrow-left');
 arrowleft.addEventListener('click', () => {
     console.log(arrowleft);
@@ -144,12 +176,16 @@ arrowleft.addEventListener('click', () => {
     shazamResponseSection.style.display = "none";
     welcomeNode.hidden = "false";
 });
-
+// *************************************library event***************************************************************//
 const library = document.querySelector('.fa-music');
 library.addEventListener('click', () => {
     window.open(`../library/?id=${userID}`,'_self');
 });
-
+// *********************************** open tracks page **********************************************************//
+const chart = document.querySelector('.fa-chart-line');
+chart.addEventListener('click', () => {
+    window.open(`../tracks/?id=${userID}`, '_self');
+});
 // ********************************** GET CHARTS TRACKS**********************************************************//
 // socket.on("charts-traks", (traks) => {
 //     traks.forEach(trak => {

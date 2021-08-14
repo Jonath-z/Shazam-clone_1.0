@@ -10,31 +10,33 @@
     <title>Library</title>
 </head>
 <body>
-    <h2>Library</h3>
+    <h2>Library</h2>
     <section class="shazamContainer">
-    <% data.reverse().forEach(shazam=> { %>
-     <%-`<div class="shazamlibrary"><img src="${shazam.musicCover.url}" alt="cover" class="musicCover"><p class="tileAndArtist">${shazam.musicTitle}<br><span>${shazam.artistName}</span></p><i class="fas fa-ellipsis-v"></i></div>` %>
+    <% data.reverse().forEach(shazam=> { %> 
+     <%-`<div class="shazamlibrary"><img src="${shazam.musicCover}" alt="cover" class="musicCover"><p class="tileAndArtist">${shazam.musicTitle}<br><span>${shazam.artistName}</span></p><i class="fas fa-ellipsis-v"></i><p class="trackID" hidden>${shazam._id}</p><p class="shazamUrl" hidden>${shazam.musicUrl}</p></div>` %>
     <% }) %>
     </section>
     <section id="dialogcontent">
-    <section id="dialogBox">
-        <div class="dialogImgContainer">
-            <img src="" alt="cover" class="dialogImg">
-            <p class="dialogPara"></p>
-        </div>
-        <div class="dialogOptionContainer">
-            <div>
-                <p><i class="fas fa-trash"></i><span class="option">Remove form your library</span></p><hr class="hr">
+        <section id="dialogBox">
+            <div class="dialogImgContainer">
+                <img src="" alt="cover" class="dialogImg">
+                <p class="dialogPara"></p>
+                <p class="dialogParaTrackID" hidden></p>
+                <input type="text" id="dialogMusicUrl" hidden>
             </div>
-            <div>
-                <p><i class="fas fa-share-alt"></i><span class="option">Share</span></p><hr class="hr">
+            <div class="dialogOptionContainer">
+                <div>
+                    <p><i class="fas fa-trash"></i><span class="option optionRemove">Remove form your library</span></p><hr class="hr">
+                </div>
+                <div>
+                    <p><i class="fas fa-share-alt"></i><span class="option optionShare">Share</span></p><hr class="hr">
+                </div>
+                <div>
+                    <p><i class="fas fa-share"></i><span class="option optionViewArtist">View artist</span></p>
+                </div>
             </div>
-            <div>
-                <p><i class="fas fa-share"></i><span class="option">View artist</span></p>
-            </div>
-        </div>
+        </section>
     </section>
-</section>
     <script src="/static/library.js"></script>
 </body>
 </html>

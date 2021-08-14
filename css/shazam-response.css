@@ -6,7 +6,7 @@
     -webkit-backdrop-filter: blur(40px);
     margin: 0;
     padding: 0;
-    position: absolute;
+    position: fixed;
     top: 0;
     bottom: 0;
     width: 100%;
@@ -15,6 +15,9 @@
     -webkit-filter: blur(40px); */
 }
 .musicOption{
+    position: fixed;
+    width: 100%;
+    top: 0;
     display: grid;
     grid-template-columns: 1fr 4fr 1fr;
     justify-content: center;
@@ -25,10 +28,13 @@
     /* background: linear-gradient(to bottom,black,rgba(0, 0, 0, 0)); */
 }
 .optionContainer{
+    z-index: 4;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     justify-content: center;
     align-items: center;
+    text-align: center;
+    font-family: sans-serif;
 }
 .musicCoverDiv{
     /* margin-top: 50px; */
@@ -57,7 +63,7 @@
 .detailsContainer{
     z-index: 1;
     margin-top: 0;
-    position: absolute;
+    position: fixed;
     width: 100%;
     bottom: 0;
     top: 0;
@@ -66,21 +72,24 @@
     font-family: sans-serif;
 }
 .musicDetails{
-    
+    margin-top: 30em;
     margin-left: 20px;
 }
 .artistName{
     color: rgb(100, 99, 99);
     font-size: small;
 }
-.optionContainer{
-    text-align: center;
-    font-family: sans-serif;
+.arrowleft,.shareContainer{
+    z-index: 4;
 }
 .fa-share-alt,.fa-arrow-left{
-    /* z-index: 1; */
     margin-left: 20px;
     font-family: sans-serif;
+}
+.optionSong,.optionLyrics,.optionArtist{
+    padding-top: 11px;
+    height: 30px;
+    border-radius: 20px;
 }
 .playFullMusic{
     text-align: center;
@@ -93,7 +102,8 @@
     border-radius: 20px;
     height: 30px;
     width: 10em;
-    margin-top: 100px;
+    margin-top: 30px;
+    
 }
 
 #lyricsContainer{
@@ -104,6 +114,37 @@
     width: 100%;
     z-index: 1;
 }
+/* *******************************************artist section*************************************** */
 #artistContainer{
+    z-index: 1;
     display: none;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(100px);
+}
+#artistImg{
+    text-align: center;
+    margin-top: 5em;
+}
+#artistImage{
+    border-radius: 50%;
+    width: 200px;
+}
+.artistNameh4{
+    color: rgb(189, 186, 186);
+    text-align: center;
+    font-family: sans-serif;
+}
+#trackParagraph{
+    color:rgb(100, 99, 99);
+    margin-left: 30px;
+    font-family: sans-serif;
+}
+hr{
+    color: rgb(100, 99, 99);
+    margin: 0px 30px 0 30px;
+    height: 1px;
 }
