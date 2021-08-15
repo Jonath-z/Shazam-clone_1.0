@@ -62,4 +62,42 @@ span{
     /* font-size: 30px; */
     margin-top: 30px;
 }
-/***************************************** SHAZAM RESPONSE ************************************************************************/
+.fa-arrow-left{
+    margin-top: 20px;
+    color: white;
+}
+/* *******************************No data********************************************** */
+#noData{
+    display: none;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(100px);
+    -webkit-backdrop-filter: blur(100px);
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+h1{
+    text-align: center;
+    margin-top: 10em;
+    color: white;
+    font-family: sans-serif;
+}
+
+.tryButton{
+    text-align: center;
+}
+
+#buttonTryAgain{
+    background:rgb(238, 44, 44);
+    color: white;
+    width: 15em;
+    height: 50px;
+    margin-top: 20px;
+    border-radius: 10px;
+    border: none;
+}

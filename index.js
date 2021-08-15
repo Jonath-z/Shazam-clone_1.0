@@ -87,6 +87,10 @@ function socket() {
         
                         axios.request(options).then(function (response) {
                             console.log(response.data);
+                            const matches = response.data.matches.length;
+                            if (matches == 0) {
+                                socket.emit('no-data', 'no data');
+                            }
                             console.log(response.data.track.artists);
                             const shazam = {
                                 id: id,

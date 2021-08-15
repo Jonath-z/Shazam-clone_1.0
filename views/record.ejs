@@ -27,9 +27,9 @@
             <div class="imageContainer">
                 <img src="/public/shazam2.png" alt="image" id="record"> 
             </div>
-            <div class="searchContainer">
+            <!-- <div class="searchContainer">
                 <i class="fa fa-search" aria-hidden="true" style="font-size:30px"></i>
-            </div>
+            </div> -->
         </section>
             <!-- ---------------------- SHAZAM RESPONSE -------------------------------------------------------->
         <section id="shazamResponse">
@@ -49,6 +49,7 @@
                 <section class="musicCover">
                     <div class="musicCoverDiv">
                         <img id="cover" src="" alt="cover">
+                        <input type="text" id="shareInput" hidden>
                     </div>
                 </section>
                 <section class="detailsContainer">
@@ -75,12 +76,17 @@
                     <!-- </div> -->
                 </section>
          </section>
-        
-
+         <section id="noData">
+                <h1>No Data matched</h1>
+             <div class="tryButton">
+                 <button id="buttonTryAgain">Try Again</button>
+             </div>
+         </section>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-storage.js"></script>
     <script src="https://cdn.rawgit.com/mattdiamond/Recorderjs/08e7abd9/dist/recorder.js"></script>
+
     <script src="/static/record.js"></script>
 </body>
 </html>

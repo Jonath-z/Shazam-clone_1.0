@@ -73,6 +73,7 @@ function startRecording() {
 }
 
 function stopRecording() {
+    h3.innerHTML = "Recognition";
     console.log("stopButton clicked");
     //tell the recorder to stop the recording 
     rec.stop();
@@ -103,7 +104,12 @@ const songOption = document.querySelector('.optionSong');
 const lyricsOption = document.querySelector('.optionLyrics');
 const artistOption = document.querySelector('.optionArtist');
 const h4ArtistName = document.querySelector('.artistNameh4');
+const nodata = document.getElementById('noData');
+const shareInput = document.getElementById('shareInput');
 
+socket.on('no-data', data => {
+    nodata.style.display = "block";
+});
 
 socket.on('shazam', ({ artistName, musicTitle, musicCover, musicUrl, lyrics }) => {
     // console.log(album, name, artists);
@@ -129,11 +135,12 @@ socket.on('shazam', ({ artistName, musicTitle, musicCover, musicUrl, lyrics }) =
         musicTitleNode.innerHTML = `${userData.shazam.musicTitle}`;
         musicArtistNameNode.innerHTML = `${userData.shazam.artistName}`;
         h4ArtistName.innerHTML = `${userData.shazam.artistName}`;
-        musicUrlNode.href = `${userData.shazam.artistName}`
+        musicUrlNode.href = `${userData.shazam.musicUrl}`;
+        shareInput.value = `${userData.shazam.musicUrl}`;
         // set lyrics
         lyricscontainerNode.innerHTML = `${userData.shazam.lyrics}`;
         //set artist image container 
-        artistImageNode.src = `${userData.shazam.musicUrl}`;
+        artistImageNode.src = `${userData.shazam.musicCover}`;
         // shazamResponseSection.style.
         shazamResponseSection.hidden = "false";
         welcomeNode.hidden = "true";
@@ -142,9 +149,9 @@ socket.on('shazam', ({ artistName, musicTitle, musicCover, musicUrl, lyrics }) =
         window.navigator.vibrate([200, 200]);
     
         h3.innerHTML = "Tap to shazam";
+        record.style.transform = "none";
     }
     songDesplay();
-    record.style.transform = "none";
 
 });
 
@@ -175,7 +182,18 @@ arrowleft.addEventListener('click', () => {
     shazamResponseSection.hidden = "true";
     shazamResponseSection.style.display = "none";
     welcomeNode.hidden = "false";
+    comeback();
 });
+// ***********************************share icon event*************************************************************//
+const share = document.querySelector('.fa-share-alt');
+share.addEventListener('click', shareSong);
+function shareSong() {
+    shareInput.focus();
+    shareInput.select();
+    // shareInput.setSelectionRange(0, 99999);
+    document.execCommand('copy', true);
+    // alert('link copied');
+}
 // *************************************library event***************************************************************//
 const library = document.querySelector('.fa-music');
 library.addEventListener('click', () => {
@@ -186,9 +204,11 @@ const chart = document.querySelector('.fa-chart-line');
 chart.addEventListener('click', () => {
     window.open(`../tracks/?id=${userID}`, '_self');
 });
-// ********************************** GET CHARTS TRACKS**********************************************************//
-// socket.on("charts-traks", (traks) => {
-//     traks.forEach(trak => {
-//         console.log(trak);
-//     });
-// })
+// ************************************ TRY button ****************************************************************//
+const tryButton = document.getElementById('buttonTryAgain');
+tryButton.addEventListener('click', comeback);
+function comeback() {
+    record.style.transform = "none";
+    nodata.style.display = "none";
+    h3.innerHTML = "Tap to shazam";
+}
