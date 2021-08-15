@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const uuid = require('uuid');
 const router = express.Router();
 const firestore = require('./firebase.js');
+const { body, validationResult } = require('express-validator');
 // const serviceAccount = require("./serviceAccount.json");
 
 // // database connection
@@ -19,7 +20,14 @@ const db = firestore.firestore()
 router.use(bodyparser.urlencoded({ extended: false }));
 
 // ************************USER REGISTRATION************************************************//
-router.post('/', (req, res) => {
+router.post('/',
+    body('email').isEmail().normalizeEmail(),
+    body('password').notEmpty().isLength({ min: 4 })
+    , (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.send('<h1 style:"font-family:sans-serif;text-align:center;margin-top:30px">Please complete the password with at least 4 characters then complete your Email</h1>');
+        }
     const password = req.body.password.trim();
     const email = req.body.email.trim();
 

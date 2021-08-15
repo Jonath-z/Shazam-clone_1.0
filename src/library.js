@@ -71,9 +71,7 @@ function copyLink() {
     shareOption.innerHTML = "link copied";
     dialogMusicUrl.value = "";
 }
-// ***********************************share icon event*************************************************************//
-const shareIcon = document.querySelector('.shazamResponseShareOption');
-shareIcon.addEventListener('click', copyLink);
+
 
 
 // ******************************* dialog view artist option event **************************************************//
@@ -91,6 +89,7 @@ const songOption = document.querySelector('.optionSong');
 const lyricsOption = document.querySelector('.optionLyrics');
 const artistOption = document.querySelector('.optionArtist');
 const h4ArtistName = document.querySelector('.artistNameh4');
+const inputOfCoping = document.getElementById('inputOfCoping');
 
 function viewArtist() {
     AllmusicCover.forEach(cover => {
@@ -102,6 +101,7 @@ function viewArtist() {
             h4ArtistName.innerHTML = `${cover.parentNode.childNodes[1].lastChild.innerHTML}`;
             musicArtistNameNode.innerHTML = `${cover.parentNode.childNodes[1].lastChild.innerHTML}`;
             dialogMusicUrl.value = `${cover.parentNode.childNodes[4].innerHTML}`;
+            inputOfCoping.value = `${cover.parentNode.childNodes[4].innerHTML}`;
             shazamResponseSection.style.display = "block";
             const body = document.getElementById('body');
             body.setAttribute('style', 'position:fixed; width:100%;top:0;bottom:0;');
@@ -117,7 +117,7 @@ viewArtist();
 songOption.addEventListener('click', song);
 function song(){
     artistContainerNode.style.display = "none";
-    lyricsOption.setAttribute('style', 'background:transprent;');
+    // lyricsOption.setAttribute('style', 'background:transprent;');
     artistOption.setAttribute('style', 'background:transprent;');
     // artistOption.hidden = "true";
     songOption.setAttribute('style', 'background:rgb(238, 44, 44);');
@@ -133,7 +133,7 @@ artistOption.addEventListener('click', () => {
     artistContainerNode.style.display = "block";
     shazamResponseSection.hidden = "false";
     shazamResponseSection.style.display = "block";
-    lyricsOption.setAttribute('style', 'background:transprent;');
+    // lyricsOption.setAttribute('style', 'background:transprent;');
     // lyricsOption.hidden = "true"
 });
 
@@ -146,7 +146,15 @@ arrowleft.addEventListener('click', () => {
     shazamResponseSection.hidden = "true";
     shazamResponseSection.style.display = "none";
 });
-
+// ***********************************share icon event*************************************************************//
+const shareIcon = document.querySelector('.shazamResponseShareOption');
+shareIcon.addEventListener('click', () => {
+    inputOfCoping.focus();
+    inputOfCoping.select();
+    inputOfCoping.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+    alert('link copied');
+});
 
 // ********************************** view dialog option *****************************************************************//
 const vewOption = document.querySelector('.optionViewArtist');

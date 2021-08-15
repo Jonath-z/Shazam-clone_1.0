@@ -21,6 +21,11 @@ body{
     margin-left: 20px;
     font-family: sans-serif;
 }
+#inputOfCoping{
+    margin-top: -20px;
+    opacity: 0;
+    width: 1px;  
+}
 #chartTracksContainer{
     padding-left: 20px;
     margin-left: 20px;
@@ -51,6 +56,10 @@ body{
     font-family: sans-serif;
     font-size: 14px;
     color: white;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 .chartSubTitle{
     font-size: small;
@@ -59,6 +68,9 @@ body{
     margin-top: -10px;
     margin-left: 10px;
     font-family: sans-serif;
+    max-width: 100px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 #TracksShazamContainer{
     display: none;
@@ -100,4 +112,76 @@ body{
     #chartTracksContainer{
         padding-left: 20px;
     } 
+}
+
+@media(min-width: 1024px){
+    .fa-arrow-left,.fa-share-alt{
+        font-size: 40px !important;
+    }
+    .fa-share-alt{
+        margin-top: 50px;
+    }
+    .fa-arrow-left{
+        margin-left: 50px;
+    }
+    .optionSong,.optionLyrics,.optionArtist{
+        font-size: 40px;
+        height: 60px;
+    }
+    .musicDetails{
+        margin-top: 30em;
+        font-size: 30px;
+    }
+    .artistName{
+        font-size: 30px;
+    }
+    .fullMusicButton{
+        font-size: 30px;
+        height: 70px;
+    }
+    #chartH2{
+        font-size: 40px;
+    }
+    .shareContainer{
+        padding-left: 50px;
+        padding-bottom: 50px;
+    }
+    #chartTracksContainer{
+        padding-left: 50px;
+    }
+    .chartDiv{
+        width: fit-content;
+        height: fit-content;
+        max-height: 600px;
+        margin-top: 20px;
+    }
+    .chartImage{
+        width: 400px;
+    }
+    .chartTitle{
+        padding-left: 10px;
+        font-size: 30px;
+        max-width: 300px;
+        max-height: 50px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .chartSubTitle{
+        font-size: 20px;
+        max-width: 300px;
+        max-height: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    #artistImg{
+        margin-top: 15em;
+    }
+    #artistImage{
+        width: 300px;
+    }
+    .artistNameh4{
+        font-size: 30px;
+    }
 }

@@ -3,27 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="/statics/login.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 </head>
 <body>
-    <form action="/login" method="post">
+    <form action="/login" method="post" id="loginform">
         <div class="emailContainer">
-            <label for="email">Email</label>
-            <input type="email" name="email" id="userEmail">
+            <!-- <label for="email">Email</label> -->
+            <input type="email" name="email" id="userEmail" placeholder="Email">
         </div>
         <div class="passwordContainer">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="userPassword">
+            <!-- <label for="password">Password</label> -->
+            <input type="password" name="password" id="userPassword" placeholder="Password">
         </div>
         <div class="buttonContainer">
-            <input type="submit" value="Submit">
+            <input type="submit" value="Submit" id="submitButton">
         </div>
     </form>
     <div class="goTosignup">
-        <button class="signup">Signup</button>
+        <button class="signup" id="signup">Signup</button>
     </div>
-
+    <p class="forgotPasswordPara">Forgot password ?</p>
+    <!-- <form id="checkMailForm"> -->
+        <div>
+            <input type="email" name="email" id="chekUserMail" placeholder="Email">
+        </div>
+        <div id="forgotpasswordDiv">
+            <input type="password" name="password" id="checkUserPassword" placeholder="Password">
+        </div>
+    <!-- </form> -->
+    <div class="submitCheckMailDiv">
+        <button id="submitCheckMail">Submit</button>
+    </div>
     <script src="/static/login.js"></script>
 </body>
 </html>

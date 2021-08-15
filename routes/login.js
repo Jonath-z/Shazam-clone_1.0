@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const { urlencoded } = require('body-parser');
 const router = express.Router();
 const firestore = require('./firebase.js');
+const { body, validationResult } = require('express-validator');
 // const firestore = require('firebase-admin');
 // const serviceAccount = require("./serviceAccount.json");
 
@@ -15,7 +16,14 @@ const db = firestore.firestore();
 
 router.use(bodyparser.urlencoded({ extended: false }));
 
-router.post('/', (req, res) => {
+router.post('/',
+    body('email').isEmail().normalizeEmail(),
+    body('password').notEmpty().isLength({ min: 4 })
+    , (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.send('<h1>Please complete the password with at least 4 characters then complete your Email</h1>')
+        }
     const password = req.body.password.trim();
     const email = req.body.email.trim();
     async function findUser() {

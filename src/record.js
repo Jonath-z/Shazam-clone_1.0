@@ -106,6 +106,7 @@ const artistOption = document.querySelector('.optionArtist');
 const h4ArtistName = document.querySelector('.artistNameh4');
 const nodata = document.getElementById('noData');
 const shareInput = document.getElementById('shareInput');
+const inputOfCoping = document.getElementById('inputOfCoping');
 
 socket.on('no-data', data => {
     nodata.style.display = "block";
@@ -145,6 +146,7 @@ socket.on('shazam', ({ artistName, musicTitle, musicCover, musicUrl, lyrics }) =
         shazamResponseSection.hidden = "false";
         welcomeNode.hidden = "true";
         shazamResponseSection.style.display = "block";
+        inputOfCoping.value = `${userData.shazam.musicUrl}`;
     
         window.navigator.vibrate([200, 200]);
     
@@ -158,7 +160,7 @@ socket.on('shazam', ({ artistName, musicTitle, musicCover, musicUrl, lyrics }) =
 // *************************************song option click event******************************************************//
 songOption.addEventListener('click', () => {
     artistContainerNode.style.display = "none";
-    lyricsOption.setAttribute('style', 'background:transprent;');
+    // lyricsOption.setAttribute('style', 'background:transprent;');
     artistOption.setAttribute('style', 'background:transprent;');
     // artistOption.hidden = "true";
     songOption.setAttribute('style', 'background:rgb(238, 44, 44);');
@@ -172,7 +174,7 @@ artistOption.addEventListener('click', () => {
     artistContainerNode.style.display = "block";
     shazamResponseSection.hidden = "false";
     shazamResponseSection.style.display = "block";
-    lyricsOption.setAttribute('style', 'background:transprent;');
+    // lyricsOption.setAttribute('style', 'background:transprent;');
     // lyricsOption.hidden = "true"
 });
 // *************************************arrow left event******************************************************//
@@ -188,9 +190,9 @@ arrowleft.addEventListener('click', () => {
 const share = document.querySelector('.fa-share-alt');
 share.addEventListener('click', shareSong);
 function shareSong() {
-    shareInput.focus();
-    shareInput.select();
-    // shareInput.setSelectionRange(0, 99999);
+    inputOfCoping.focus();
+    inputOfCoping.select();
+    // inputOfCoping.setSelectionRange(0, 99999);
     document.execCommand('copy', true);
     // alert('link copied');
 }

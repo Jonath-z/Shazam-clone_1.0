@@ -43,6 +43,10 @@ body,html{
     padding-left: 10px;
     font-family: sans-serif;
     font-size: 14px;
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 span{
     font-size: small;
@@ -99,6 +103,15 @@ span{
 .dialogPara{
     margin-left: 20px;
     font-family: sans-serif;
+}
+#dialogMusicUrl{
+opacity: 0;
+width: 10px;
+}
+#inputOfCoping{
+    margin-top: -20px;
+    opacity: 0;
+    width: 1px;  
 }
 /* **************************media queries ************************************ */
 @media(max-width: 320px){
@@ -165,7 +178,7 @@ span{
 .optionContainer{
     z-index: 4;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -282,3 +295,96 @@ hr{
     margin: 0px 30px 0 30px;
     height: 1px;  
 } 
+/* ******************************************** response media queries ***************************************** */
+@media(min-width: 768px){
+    .musicDetails{
+        margin-top: 40em;
+        margin-left: 20px;
+    }
+    .fullMusicButton{
+        border: none;
+        background: rgb(31, 30, 30);
+        color: white;
+        border-radius: 20px;
+        height: 50px;
+        width: 15em;
+        margin-top: 100px;
+        
+    }
+}
+
+@media(min-width: 1024px){
+    .fa-arrow-left,.fa-share-alt{
+        font-size: 40px !important;
+    }
+    .fa-share-alt{
+        margin-top: 50px;
+    }
+    .fa-arrow-left{
+        margin-left: 50px;
+    }
+    .optionSong,.optionLyrics,.optionArtist{
+        font-size: 40px;
+        height: 60px;
+    }
+    .musicDetails{
+        margin-top: 30em;
+        font-size: 30px;
+    }
+    .artistName{
+        font-size: 30px;
+    }
+    .fullMusicButton{
+        font-size: 30px;
+        height: 70px;
+    }
+    #libraryH2{
+        font-size: 40px;
+    }
+    .shareContainer{
+        padding-left: 50px;
+        padding-bottom: 50px;
+    }
+    .fa-ellipsis-v{
+        font-size: 30px;
+        float: right;
+    }
+    .shazamContainer{
+        padding-left: 50px;
+    }
+    .shazamlibrary{
+        width: fit-content;
+        height: fit-content;
+        max-height: 600px;
+        margin-top: 20px;
+    }
+    .musicCover{
+        width: 400px;
+    }
+    .tileAndArtist{
+        padding-left: 10px;
+        font-size: 30px;
+        max-width: 300px;
+        max-height: 50px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    span{
+        font-size: 20px;
+        max-width: 300px;
+        max-height: 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    #artistImg{
+        margin-top: 15em;
+    }
+    #artistImage{
+        width: 300px;
+    }
+    .artistNameh4{
+        font-size: 30px;
+    }
+}

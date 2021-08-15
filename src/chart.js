@@ -11,14 +11,17 @@ const songOption = document.querySelector('.optionSong');
 const lyricsOption = document.querySelector('.optionLyrics');
 const artistOption = document.querySelector('.optionArtist');
 const h4ArtistName = document.querySelector('.artistNameh4');
+const inputOfCoping = document.getElementById('inputOfCoping');
 
 const chartDiv = document.querySelectorAll('.chartDiv');
 const TracksShazamContainer = document.getElementById('TracksShazamContainer');
 const chartTracksContainer = document.getElementById('chartTracksContainer');
 const chartH2 = document.getElementById('chartH2');
 
+
 chartDiv.forEach(charts => {
     charts.addEventListener('click', (e) => {
+        songOptionEvent();
         const target = e.target
         // console.log(e.target.parentNode);
         // console.log(chartDiv.firstChild);
@@ -30,10 +33,12 @@ chartDiv.forEach(charts => {
         musicTitleNode.innerHTML = `${target.parentNode.childNodes[2].innerHTML}`;
         musicUrlNode.setAttribute('href', `${target.parentNode.childNodes[4].innerHTML}`);
 
-        console.log("src="+target.parentNode.childNodes[0].src, "name"+target.parentNode.childNodes[2].innerHTML,
-            "song"+target.parentNode.childNodes[3].innerHTML,
-            "url"+target.parentNode.childNodes[4].innerHTML
-        );
+        inputOfCoping.value = `${target.parentNode.childNodes[4].innerHTML}`;
+
+        // console.log("src="+target.parentNode.childNodes[0].src, "name"+target.parentNode.childNodes[2].innerHTML,
+        //     "song"+target.parentNode.childNodes[3].innerHTML,
+        //     "url"+target.parentNode.childNodes[4].innerHTML
+        // );
         TracksShazamContainer.style.display = "block";
         chartTracksContainer.hidden = "true";
         chartH2.style.display = "none";
@@ -41,14 +46,15 @@ chartDiv.forEach(charts => {
 });
 
 // *************************************song option click event******************************************************//
-songOption.addEventListener('click', () => {
+songOption.addEventListener('click', songOptionEvent);
+function songOptionEvent(){
     artistContainerNode.style.display = "none";
-    lyricsOption.setAttribute('style', 'background:transprent;');
+    // lyricsOption.setAttribute('style', 'background:transprent;');
     artistOption.setAttribute('style', 'background:transprent;');
     // artistOption.hidden = "true";
     songOption.setAttribute('style', 'background:rgb(238, 44, 44);');
     // songOption.hidden = "true";
-});
+}
 // *********************************** artist option click event ***************************************************//
 artistOption.addEventListener('click', () => {
     artistOption.setAttribute('style', 'background:rgb(238, 44, 44);');
@@ -57,7 +63,7 @@ artistOption.addEventListener('click', () => {
     artistContainerNode.style.display = "block";
     TracksShazamContainer.hidden = "false";
     TracksShazamContainer.style.display = "block";
-    lyricsOption.setAttribute('style', 'background:transprent;');
+    // lyricsOption.setAttribute('style', 'background:transprent;');
     // lyricsOption.hidden = "true"
 });
 
@@ -69,3 +75,14 @@ arrowleft.addEventListener('click', () => {
     chartH2.style.display = "block";
     // welcomeNode.hidden = "false";
 });
+
+// ***********************************share icon event*************************************************************//
+const share = document.querySelector('.fa-share-alt');
+share.addEventListener('click', shareSong);
+function shareSong() {
+    inputOfCoping.focus();
+    inputOfCoping.select();
+    // inputOfCoping.setSelectionRange(0, 99999);
+    document.execCommand('copy', true);
+    // alert('link copied');
+}
