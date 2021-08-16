@@ -133,6 +133,7 @@ artistOption.addEventListener('click', () => {
     artistContainerNode.style.display = "block";
     shazamResponseSection.hidden = "false";
     shazamResponseSection.style.display = "block";
+    // musicCoverNode.style.filter = 'blur(100px)';
     // lyricsOption.setAttribute('style', 'background:transprent;');
     // lyricsOption.hidden = "true"
 });

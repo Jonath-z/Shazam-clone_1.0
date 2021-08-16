@@ -20,6 +20,7 @@ const library = require('./routes/library.js');
 const chart = require('./routes/chart.js');
 const remove = require('./routes/remove.js');
 const checkUserMail = require('./routes/checkEmail.js');
+const updateForgotenPassword = require('./routes/updatepassword.js');
 
 const server = require('http').createServer(app);
 const io = require('socket.io')(server, { cors: { origin: "*" } });
@@ -54,6 +55,7 @@ app.use('/library/', library);
 app.use('/tracks/', chart);
 app.use('/remove', remove);
 app.use('/check/email', checkUserMail);
+app.use('/update/password', updateForgotenPassword);
 
 function socket() {
     io.on('connection', (socket) => {

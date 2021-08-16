@@ -27,7 +27,7 @@ router.post('/',
     const password = req.body.password.trim();
     const email = req.body.email.trim();
     async function findUser() {
-        const snapshot = await db.collection('users').where("email", "==", `${email}`).get()
+        const snapshot = await db.collection('users').where("email", "==", `${email}`).get();
         if (snapshot.empty) {
             console.log('no data');
         }

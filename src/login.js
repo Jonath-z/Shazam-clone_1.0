@@ -9,6 +9,10 @@ const checkMailForm = document.getElementById('checkMailForm');
 const signupButtonByID = document.getElementById('signup');
 const checkUserPassword = document.getElementById('checkUserPassword');
 const submitCheckMail = document.getElementById('submitCheckMail');
+const emailInput = document.getElementById('chekUserMail');
+const passwordInput = document.getElementById('checkUserPassword');
+const forgotpasswordDiv = document.getElementById('forgotpasswordDiv');
+const submitCheckMailDiv = document.getElementById('submitCheckMailDiv')
 
 const forgotPasswordPara = document.querySelector('.forgotPasswordPara');
 forgotPasswordPara.addEventListener('click', () => {
@@ -16,16 +20,15 @@ forgotPasswordPara.addEventListener('click', () => {
     forgotPasswordPara.hidden = "true";
     loginform.style.display = "none";
     checkMailForm.style.display = "block";
-    submitCheckMail.style.display = "block";
+    submitCheckMailDiv.style.display = "block";
+    // submitCheckMail.style.display = "block";
 })
-
-
-const emailInput = document.getElementById('chekUserMail');
-const email = emailInput.value;
-
+console.log(submitCheckMail.innerHTML);
 // const submitCheckMail = document.getElementById('submitCheckMail');
-    submitCheckMail.addEventListener('click', () => {
-        console.log(email);
+submitCheckMail.addEventListener('click', () => {
+    if (submitCheckMail.innerHTML === "Submit") {
+        const email = emailInput.value;
+        // console.log(email);
         fetch('../check/email', {
             method: "POST",
             headers: {
@@ -38,6 +41,7 @@ const email = emailInput.value;
         }).then(res => {
             return res.text();
         }).then(data => {
+            console.log(data);
             if (data == '404') {
                 emailInput.value = '';
                 alert('Email Not Find');
@@ -47,7 +51,38 @@ const email = emailInput.value;
                 alert('please complete a normalize email');
             }
             else if (data == '200') {
-                checkUserPassword.style.display = "block";
+                forgotpasswordDiv.style.display = "block";
+                submitCheckMail.innerHTML = 'Update';
             }
+        });
+    }
+    if (submitCheckMail.innerHTML === "Update") {
+        const email = emailInput.value;
+        const password = passwordInput.value;
+        fetch('../update/password', {
+            method: "POST",
+            headers: {
+                "accepts": "*/*",
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({
+                email: email,
+                password: password
+            })
         })
-    });
+            .then(res => {
+                return res.text();
+            })
+            .then(data => {
+                if (data == 'validation error') {
+                    passwordInput.value = '';
+                    alert('password must have at least 4 charachters minimum');
+                }
+                if (data == '200') {
+                    alert('password updated');
+                    window.open('../login', '_self');
+                }
+            })
+        
+    }
+});

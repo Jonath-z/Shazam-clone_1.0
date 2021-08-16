@@ -44,9 +44,36 @@ input{
     border: none;
     outline: none;
     box-shadow: 2px 2px 2px  inset rgb(19, 16, 16);
+    margin-left: 20px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-left: 20px;
+    margin-right: 20px;
+    color: rgb(189, 188, 188);
 }
 input::placeholder{
     padding-left: 20px;
+}
+
+input::placeholder{
+    color: gray;
+
+}
+input::-webkit-input-placeholder{
+    color: gray;
+}
+input::-moz-placeholder{
+    color: gray;
+
+}
+input::-ms-input-placaholder{
+    color: gray;
+
+}
+input:-moz-placeholder{
+    color: gray;
+
 }
 
 /* **********************media queries*********************** */
