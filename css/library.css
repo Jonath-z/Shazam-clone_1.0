@@ -159,8 +159,6 @@ width: 10px;
     width: 100%;
     min-height: 100%;
     z-index: 1;
-    /* filter: blur(40px);
-    -webkit-filter: blur(40px); */
 }
 .musicOption{
     position: fixed;
