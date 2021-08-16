@@ -83,7 +83,7 @@ function socket() {
                             url: 'https://shazam.p.rapidapi.com/songs/detect',
                             headers: {
                                 'content-type': 'text/plain',
-                                'x-rapidapi-key': '5d8653681dmshd89639507d3fd0ap13628fjsn37e488cc2c3e',
+                                'x-rapidapi-key':  `${process.env.SHAZAM_RAPID_API_KEY}`,
                                 'x-rapidapi-host': 'shazam.p.rapidapi.com'
                             },
                             data: `${base64}`
@@ -117,7 +117,7 @@ function socket() {
                                 url: 'https://sridurgayadav-chart-lyrics-v1.p.rapidapi.com/apiv1.asmx/SearchLyricDirect',
                                 params: { artist: `${artist}`, song: `${song}` },
                                 headers: {
-                                    'x-rapidapi-key': '5d8653681dmshd89639507d3fd0ap13628fjsn37e488cc2c3e',
+                                    'x-rapidapi-key': `${process.env.SHAZAM_RAPID_API_KEY}`,
                                     'x-rapidapi-host': 'sridurgayadav-chart-lyrics-v1.p.rapidapi.com'
                                 }
                             };
