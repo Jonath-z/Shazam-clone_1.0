@@ -23,7 +23,7 @@ forgotPasswordPara.addEventListener('click', () => {
     submitCheckMailDiv.style.display = "block";
     // submitCheckMail.style.display = "block";
 })
-console.log(submitCheckMail.innerHTML);
+// console.log(submitCheckMail.innerHTML);
 // const submitCheckMail = document.getElementById('submitCheckMail');
 submitCheckMail.addEventListener('click', () => {
     if (submitCheckMail.innerHTML === "Submit") {
@@ -41,7 +41,7 @@ submitCheckMail.addEventListener('click', () => {
         }).then(res => {
             return res.text();
         }).then(data => {
-            console.log(data);
+            // console.log(data);
             if (data == '404') {
                 emailInput.value = '';
                 alert('Email Not Find');

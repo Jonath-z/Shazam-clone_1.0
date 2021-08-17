@@ -73,7 +73,7 @@ function socket() {
                     });
 
                     socket.on('song', (blob) => {
-                        console.log(blob);
+                        // console.log(blob);
                         const buffer = blob;
                         const base64 = buffer.toString('base64');
                         // console.log(base64);
@@ -90,12 +90,14 @@ function socket() {
                         };
         
                         axios.request(options).then(function (response) {
-                            console.log(response.data);
+                            // console.log(response.data);
                             const matches = response.data.matches.length;
+                            
+    // *****************************************check data response *************************************************//
                             if (matches == 0) {
                                 socket.emit('no-data', 'no data');
                             }
-                            console.log(response.data.track.artists);
+                            // console.log(response.data.track.artists);
                             const shazam = {
                                 id: id,
                                 artistName: response.data.track.subtitle,
@@ -111,23 +113,23 @@ function socket() {
                         }).catch(function (error) {
                             console.error(error);
                         });
-                        socket.on('lyrics-parameters', ({ artist, song }) => {
-                            const options = {
-                                method: 'GET',
-                                url: 'https://sridurgayadav-chart-lyrics-v1.p.rapidapi.com/apiv1.asmx/SearchLyricDirect',
-                                params: { artist: `${artist}`, song: `${song}` },
-                                headers: {
-                                    'x-rapidapi-key': `${process.env.SHAZAM_RAPID_API_KEY}`,
-                                    'x-rapidapi-host': 'sridurgayadav-chart-lyrics-v1.p.rapidapi.com'
-                                }
-                            };
+                        // socket.on('lyrics-parameters', ({ artist, song }) => {
+                        //     const options = {
+                        //         method: 'GET',
+                        //         url: 'https://sridurgayadav-chart-lyrics-v1.p.rapidapi.com/apiv1.asmx/SearchLyricDirect',
+                        //         params: { artist: `${artist}`, song: `${song}` },
+                        //         headers: {
+                        //             'x-rapidapi-key': `${process.env.SHAZAM_RAPID_API_KEY}`,
+                        //             'x-rapidapi-host': 'sridurgayadav-chart-lyrics-v1.p.rapidapi.com'
+                        //         }
+                        //     };
                           
-                            axios.request(options).then(function (response) {
-                                console.log(response.data);
-                            }).catch(function (error) {
-                                console.error(error);
-                            });
-                        });
+                        //     axios.request(options).then(function (response) {
+                        //         console.log(response.data);
+                        //     }).catch(function (error) {
+                        //         console.error(error);
+                        //     });
+                        // });
                     });
                 });
 

@@ -1,3 +1,5 @@
+
+const musicCoverDiv = document.querySelector('.musicCoverDiv');
 const musicCoverNode = document.getElementById('cover');
 const musicTitleNode = document.getElementById('titleNode');
 const musicArtistNameNode = document.querySelector('.artistName');
@@ -47,8 +49,11 @@ chartDiv.forEach(charts => {
 
 // *************************************song option click event******************************************************//
 songOption.addEventListener('click', songOptionEvent);
-function songOptionEvent(){
+function songOptionEvent() {
+    musicCoverDiv.style.filter = "blur(0px)";
     artistContainerNode.style.display = "none";
+    chartTracksContainer.setAttribute('hidden', 'true');
+    chartTracksContainer.setAttribute('style', 'display:none !important');
     // lyricsOption.setAttribute('style', 'background:transprent;');
     artistOption.setAttribute('style', 'background:transprent;');
     // artistOption.hidden = "true";
@@ -60,9 +65,12 @@ artistOption.addEventListener('click', () => {
     artistOption.setAttribute('style', 'background:rgb(238, 44, 44);');
     songOption.setAttribute('style', 'background:transprent;');
     // songOption.hidden = "true"
+    musicCoverDiv.style.filter = "blur(40px)";
     artistContainerNode.style.display = "block";
     TracksShazamContainer.hidden = "false";
     TracksShazamContainer.style.display = "block";
+    chartTracksContainer.setAttribute('style', 'display:none !important');
+    chartTracksContainer.setAttribute('hidden', 'true');
     // lyricsOption.setAttribute('style', 'background:transprent;');
     // lyricsOption.hidden = "true"
 });
@@ -72,6 +80,7 @@ arrowleft.addEventListener('click', () => {
     // console.log(arrowleft);
     TracksShazamContainer.style.display = "none";
     chartTracksContainer.hidden = "false";
+    chartTracksContainer.setAttribute('style', 'display:grid !important');
     chartH2.style.display = "block";
     // welcomeNode.hidden = "false";
 });

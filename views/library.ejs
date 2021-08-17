@@ -12,7 +12,7 @@
 </head>
 <body id="body">
     <h2 id="libraryH2">Library</h2>
-    <section class="shazamContainer">
+    <section class="shazamContainer" hidden="false">
     <% data.reverse().forEach(shazam=> { %> 
      <%-`<div class="shazamlibrary"><img src="${shazam.musicCover}" alt="cover" class="musicCover"><p class="tileAndArtist">${shazam.musicTitle}<br><span>${shazam.artistName}</span></p><i class="fas fa-ellipsis-v"></i><p class="trackID" hidden>${shazam._id}</p><p class="shazamUrl" hidden>${shazam.musicUrl}</p></div>` %>
     <% }) %>

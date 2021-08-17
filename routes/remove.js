@@ -12,7 +12,7 @@ router.use(bodyparser.urlencoded({ extended: false }));
 router.post('/', (req, res) => {
     const id = req.body.id;
     const mongoID = new ObjectId(id);
-    console.log(mongoID, id);
+    // console.log(mongoID, id);
     mongodb.collection("users").deleteOne({ _id: mongoID });
     
 });

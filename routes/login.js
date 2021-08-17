@@ -34,7 +34,7 @@ router.post('/',
         snapshot.forEach(doc => {
             async function checkUserIndentification() {
                 const validPassword = await bcrypt.compare(password, doc.data().password);
-                console.log(validPassword);
+                // console.log(validPassword);
                 if (validPassword) {
                     res.redirect('/shazam/?id=' + doc.data().id);
                 }

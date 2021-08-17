@@ -46,14 +46,14 @@ function startRecording() {
     audioContext.resume().then(() => {
         console.log('audio context resumed');
     })
-    console.log('recoding started');
+    ('recoding started');
     var constraints = {
         audio: true,
         video: false
     }
 
     navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
-        console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
+        // console.log("getUserMedia() success, stream created, initializing Recorder.js ...");
         /* assign to gumStream for later use */
         gumStream = stream;
         /* use the stream */
@@ -64,7 +64,7 @@ function startRecording() {
         })
         //start the recording process 
         rec.record()
-        console.log("Recording started");
+        // console.log("Recording started");
         setTimeout(stopRecording, 3000);
     }).catch(function (err) {
         //enable the record button if getUserMedia() fails 
@@ -74,7 +74,7 @@ function startRecording() {
 
 function stopRecording() {
     h3.innerHTML = "Recognition";
-    console.log("stopButton clicked");
+    // console.log("stopButton clicked");
     //tell the recorder to stop the recording 
     rec.stop();
     //stop microphone access
@@ -84,7 +84,7 @@ function stopRecording() {
 }
 
 function createDownloadLink(blob) {
-    console.log(blob);
+    // console.log(blob);
     socket.emit('song', blob);
 }
 
@@ -107,8 +107,11 @@ const h4ArtistName = document.querySelector('.artistNameh4');
 const nodata = document.getElementById('noData');
 const shareInput = document.getElementById('shareInput');
 const inputOfCoping = document.getElementById('inputOfCoping');
+const musicCoverDiv = document.querySelector('.musicCoverDiv');
 
+// *********************************no data hendler************************************************************//
 socket.on('no-data', data => {
+    welcomeNode.setAttribute('style', 'display:none !important');
     nodata.style.display = "block";
 });
 
@@ -126,7 +129,7 @@ socket.on('shazam', ({ artistName, musicTitle, musicCover, musicUrl, lyrics }) =
     };
     window.localStorage.setItem('user', JSON.stringify(user));
     const userData = JSON.parse(localStorage.getItem('user'));
-    console.log(userData);
+    // console.log(userData);
     //*************************************emit lyrics parameters******************************************* */
     socket.emit('lyrics-parameters', { artist: userData.shazam.artistName, song: userData.shazam.musicTitle });
     songOption.setAttribute('style', 'background:rgb(238, 44, 44);');
@@ -158,32 +161,39 @@ socket.on('shazam', ({ artistName, musicTitle, musicCover, musicUrl, lyrics }) =
 });
 
 // *************************************song option click event******************************************************//
-songOption.addEventListener('click', () => {
+songOption.addEventListener('click', songOptionFunction)
+function songOptionFunction() {
+    musicCoverDiv.style.filter = "blur(0px)";
+    welcomeNode.hidden = "true";
+    welcomeNode.setAttribute('style', 'display:none !important');
     artistContainerNode.style.display = "none";
     // lyricsOption.setAttribute('style', 'background:transprent;');
     artistOption.setAttribute('style', 'background:transprent;');
     // artistOption.hidden = "true";
     songOption.setAttribute('style', 'background:rgb(238, 44, 44);');
     // songOption.hidden = "true";
-});
+}
 // *********************************** artist option click event ***************************************************//
 artistOption.addEventListener('click', () => {
+    musicCoverDiv.style.filter = "blur(40px)";
     artistOption.setAttribute('style', 'background:rgb(238, 44, 44);');
     songOption.setAttribute('style', 'background:transprent;');
     // songOption.hidden = "true"
     artistContainerNode.style.display = "block";
     shazamResponseSection.hidden = "false";
     shazamResponseSection.style.display = "block";
+    welcomeNode.setAttribute('style', 'display:none !important');
     // lyricsOption.setAttribute('style', 'background:transprent;');
     // lyricsOption.hidden = "true"
 });
 // *************************************arrow left event******************************************************//
 const arrowleft = document.querySelector('.fa-arrow-left');
 arrowleft.addEventListener('click', () => {
-    console.log(arrowleft);
+    // console.log(arrowleft);
     shazamResponseSection.hidden = "true";
     shazamResponseSection.style.display = "none";
     welcomeNode.hidden = "false";
+    welcomeNode.setAttribute('style', 'display:block !important');
     comeback();
 });
 // ***********************************share icon event*************************************************************//
@@ -210,6 +220,7 @@ chart.addEventListener('click', () => {
 const tryButton = document.getElementById('buttonTryAgain');
 tryButton.addEventListener('click', comeback);
 function comeback() {
+    welcomeNode.setAttribute('style', 'display:block !important');
     record.style.transform = "none";
     nodata.style.display = "none";
     h3.innerHTML = "Tap to shazam";

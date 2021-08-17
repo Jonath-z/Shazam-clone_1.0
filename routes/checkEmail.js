@@ -17,7 +17,7 @@ router.post('/', body('email').isEmail().normalizeEmail(),
             res.send('validation error');
         }
         const email = req.body.email.trim();
-        console.log(email);
+        // console.log(email);
         async function checkEmail() {
             const snapshot = await db.collection('users').where("email", "==", `${email}`).get();
             if (snapshot.empty) {

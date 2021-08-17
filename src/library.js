@@ -74,7 +74,11 @@ function copyLink() {
 
 
 
+
 // ******************************* dialog view artist option event **************************************************//
+const libraryH2 = document.getElementById('libraryH2');
+const shazamContainer = document.querySelector('.shazamContainer');
+const musicCoverDiv = document.querySelector('.musicCoverDiv');
 const musicCoverNode = document.getElementById('cover');
 const musicTitleNode = document.getElementById('titleNode');
 const musicArtistNameNode = document.querySelector('.artistName');
@@ -115,8 +119,12 @@ viewArtist();
 // *************************************song option click event******************************************************//
 
 songOption.addEventListener('click', song);
-function song(){
+function song() {
     artistContainerNode.style.display = "none";
+    shazamContainer.setAttribute('hidden', 'true');
+    musicCoverDiv.style.filter = "blur(0px)";
+    shazamContainer.setAttribute('style', 'display:none !important');
+    libraryH2.setAttribute('style', 'display:none !important');
     // lyricsOption.setAttribute('style', 'background:transprent;');
     artistOption.setAttribute('style', 'background:transprent;');
     // artistOption.hidden = "true";
@@ -133,7 +141,11 @@ artistOption.addEventListener('click', () => {
     artistContainerNode.style.display = "block";
     shazamResponseSection.hidden = "false";
     shazamResponseSection.style.display = "block";
-    artistContainerNode.style.backdropFilter = "blur(100px)";
+    // artistContainerNode.style.backdropFilter = "blur(100px)";
+    musicCoverDiv.style.filter = "blur(40px)";
+    shazamContainer.setAttribute('style', 'display:none !important');
+    shazamContainer.setAttribute('hidden', 'true');
+    libraryH2.setAttribute('style', 'display:none !important');
     // musicCoverNode.style.filter = 'blur(100px)';
     // lyricsOption.setAttribute('style', 'background:transprent;');
     // lyricsOption.hidden = "true"
@@ -145,8 +157,11 @@ arrowleft.addEventListener('click', () => {
     const body = document.getElementById('body');
     body.setAttribute('style','');
     // console.log(arrowleft);
+    shazamContainer.setAttribute('style', 'display:grid !important`;')
     shazamResponseSection.hidden = "true";
     shazamResponseSection.style.display = "none";
+    shazamContainer.setAttribute('hidden', 'false');
+    libraryH2.setAttribute('style', 'display:block !important');
 });
 // ***********************************share icon event*************************************************************//
 const shareIcon = document.querySelector('.shazamResponseShareOption');

@@ -9,12 +9,12 @@ const mongodb = mongoose.connection;
 
 router.post('/', (req, res) => {
     const id = req.body.id;
-    console.log(id);
+    // console.log(id);
     res.redirect('/library/');
 });
 router.get('/', (req, res) => {
     const id = req.query.id;
-    console.log(id);
+    // console.log(id);
     mongodb.collection("users").find({id:`${id}`}).toArray((err, data) => {
         if (err) {
             console.log(err);
