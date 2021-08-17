@@ -43,9 +43,9 @@ function startRecording() {
     }
     setInterval(recordTransform, 1000);
 
-    audioContext.resume().then(() => {
-        console.log('audio context resumed');
-    })
+    // audioContext.resume().then(() => {
+    //     console.log('audio context resumed');
+    // });
     ('recoding started');
     var constraints = {
         audio: true,
