@@ -25,6 +25,7 @@ router.post('/',
             const snapshot = await db.collection('users').where("email", "==", `${email}`).get();
             if (snapshot.empty) {
                 console.log('no data');
+                res.send('email incorrect');
             }
             snapshot.forEach(doc => {
                 async function cryptPassword() {

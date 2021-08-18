@@ -50,7 +50,10 @@ submitCheckMail.addEventListener('click', () => {
                 emailInput.value = "";
                 alert('please complete a normalize email');
             }
-            else if (data == '200') {
+            else if (data == 'email incorrect') {
+                alert('No data matched on this Email');
+            }
+            else if (data == '200') { 
                 forgotpasswordDiv.style.display = "block";
                 submitCheckMail.innerHTML = 'Update';
             }
