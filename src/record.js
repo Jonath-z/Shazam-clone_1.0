@@ -65,7 +65,7 @@ function startRecording() {
         //start the recording process 
         rec.record()
         // console.log("Recording started");
-        setTimeout(stopRecording, 3000);
+        setTimeout(stopRecording, 5000);
     }).catch(function (err) {
         //enable the record button if getUserMedia() fails 
         console.log(err);
