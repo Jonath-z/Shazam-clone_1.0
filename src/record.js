@@ -65,7 +65,7 @@ function startRecording() {
         //start the recording process 
         rec.record()
         // console.log("Recording started");
-        setTimeout(stopRecording, 5000);
+        setTimeout(stopRecording, 3000);
     }).catch(function (err) {
         //enable the record button if getUserMedia() fails 
         console.log(err);
@@ -84,7 +84,7 @@ function stopRecording() {
 }
 
 function createDownloadLink(blob) {
-    // console.log(blob);
+    console.log(blob);
     socket.emit('song', blob);
 }
 

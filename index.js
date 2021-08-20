@@ -61,101 +61,64 @@ function socket() {
     io.on('connection', (socket) => {
         console.log('socekt ID' + socket.id);
         socket.on('userID', id => {
-            async function updateUserSocketID() {
-                const snapshot = await db.collection("users").where("id", "==", `${id}`).get();
-                if (snapshot.empty) {
-                    console.log("no data");
-                }
-                // console.log(snapshot);
-                snapshot.forEach(doc => {
-                    db.collection("users").doc(doc.id).update({
-                        "socketID": `${socket.id}`
-                    });
+            // async function updateUserSocketID() {
+            //     const snapshot = await db.collection("users").where("id", "==", `${id}`).get();
+            //     if (snapshot.empty) {
+            //         console.log("no data");
+            //     }
+            //     // console.log(snapshot);
+            //     snapshot.forEach(doc => {
+            //         db.collection("users").doc(doc.id).update({
+            //             "socketID": `${socket.id}`
+            //         });
 
-                    socket.on('song', (blob) => {
-                        // console.log(blob);
-                        const buffer = blob;
-                        const base64 = buffer.toString('base64');
-                        // console.log(base64);
+            socket.on('song', (blob) => {
+                console.log(blob);
+                const buffer = blob;
+                const base64 = buffer.toString('base64');
+                // console.log(base64);
                        
-                        const options = {
-                            method: 'POST',
-                            url: 'https://shazam.p.rapidapi.com/songs/detect',
-                            headers: {
-                                'content-type': 'text/plain',
-                                'x-rapidapi-key':  `${process.env.SHAZAM_RAPID_API_KEY}`,
-                                'x-rapidapi-host': 'shazam.p.rapidapi.com'
-                            },
-                            data: `${base64}`
-                        };
+                const options = {
+                    method: 'POST',
+                    url: 'https://shazam.p.rapidapi.com/songs/detect',
+                    headers: {
+                        'content-type': 'text/plain',
+                        'x-rapidapi-key': `${process.env.SHAZAM_RAPID_API_KEY}`,
+                        'x-rapidapi-host': 'shazam.p.rapidapi.com'
+                    },
+                    data: `${base64}`
+                };
         
-                        axios.request(options).then(function (response) {
-                            // console.log(response.data);
-                            const matches = response.data.matches.length;
+                axios.request(options).then(function (response) {
+                    console.log(response.data);
+                    const matches = response.data.matches.length;
                             
-    // *****************************************check data response *************************************************//
-                            if (matches == 0) {
-                                socket.emit('no-data', 'no data');
-                            }
-                            // console.log(response.data.track.artists);
-                            const shazam = {
-                                id: id,
-                                artistName: response.data.track.subtitle,
-                                musicTitle: response.data.track.title,
-                                musicCover: response.data.track.images.background,
-                                musicUrl: response.data.track.share.href,
-                                // lyrics: `${lyrics.message.body.lyrics.lyrics_body}`
-                            }
-                            socket.emit('shazam', shazam);
-                            mongodb.collection("users").insertOne(shazam);
-                            // getShazamLyrics();
+                    // **************************check data response ********************//
+                    if (matches == 0) {
+                        socket.emit('no-data', 'no data');
+                    }
+                    
+                    const shazam = {
+                        id: id,
+                        artistName: response.data.track.subtitle,
+                        musicTitle: response.data.track.title,
+                        musicCover: response.data.track.images.background,
+                        musicUrl: response.data.track.share.href,
+                        // lyrics: `${lyrics.message.body.lyrics.lyrics_body}`
+                    }
+                    socket.emit('shazam', shazam);
+                    mongodb.collection("users").insertOne(shazam);
+                    // getShazamLyrics();
 
-                        }).catch(function (error) {
-                            console.error(error);
-                        });
-                        // socket.on('lyrics-parameters', ({ artist, song }) => {
-                        //     const options = {
-                        //         method: 'GET',
-                        //         url: 'https://sridurgayadav-chart-lyrics-v1.p.rapidapi.com/apiv1.asmx/SearchLyricDirect',
-                        //         params: { artist: `${artist}`, song: `${song}` },
-                        //         headers: {
-                        //             'x-rapidapi-key': `${process.env.SHAZAM_RAPID_API_KEY}`,
-                        //             'x-rapidapi-host': 'sridurgayadav-chart-lyrics-v1.p.rapidapi.com'
-                        //         }
-                        //     };
-                          
-                        //     axios.request(options).then(function (response) {
-                        //         console.log(response.data);
-                        //     }).catch(function (error) {
-                        //         console.error(error);
-                        //     });
-                        // });
-                    });
+                }).catch(function (error) {
+                    console.error(error);
                 });
-
-            } updateUserSocketID();
-         
-        
+            });
         });
-        // const options = {
-        //     method: 'GET',
-        //     url: 'https://shazam.p.rapidapi.com/charts/track',
-        //     params: { locale: 'en-US', pageSize: '20', startFrom: '0' },
-        //     headers: {
-        //         'x-rapidapi-key': '5d8653681dmshd89639507d3fd0ap13628fjsn37e488cc2c3e',
-        //         'x-rapidapi-host': 'shazam.p.rapidapi.com'
-        //     }
-        // };
-
-        // axios.request(options).then(function (response) {
-        //     console.log(response.data);
-        //     socket.emit("charts-traks", response.data);
-        // }).catch(function (error) {
-        //     console.error(error);
-        // });
-    
     });
-}
+
+}//updateUserSocketID();
+
 socket();
 
 const port = process.env.PORT || 7070
