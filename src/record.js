@@ -84,7 +84,7 @@ function stopRecording() {
 }
 
 function createDownloadLink(blob) {
-    console.log(blob);
+    // console.log(blob)
     socket.emit('song', blob);
 }
 
