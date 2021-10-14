@@ -9,3 +9,10 @@ body{
 .shazamWelcome{
 margin-top: 50%;
 }
+
+@media(min-width:1500px)
+{
+    .shazamWelcome{
+        margin-top: 20%;
+        }
+}
