@@ -153,5 +153,9 @@ input:-moz-placeholder{
         vertical-align: middle;
         margin-top: 10%;
     }
+    #checkMailForm{
+        display: none;
+        margin-top: 20%;
+    }
 }
 

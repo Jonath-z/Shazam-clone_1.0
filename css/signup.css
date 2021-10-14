@@ -115,3 +115,13 @@ input:-moz-placeholder{
         padding-top: 10px;
     }
 }
+
+@media(min-width:1500px)
+{
+    form{
+        display: flex;
+        flex-direction: column;
+        vertical-align: middle;
+        margin-top: 20%;
+    }
+}
