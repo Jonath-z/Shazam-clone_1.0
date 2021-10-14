@@ -48,7 +48,7 @@ submitCheckMail.addEventListener('click', () => {
             }
             else if (data == 'validation error') {
                 emailInput.value = "";
-                alert('please complete a normalize email');
+                alert('Please complete a normalize email');
             }
             else if (data == 'email incorrect') {
                 alert('No data matched on this Email');

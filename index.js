@@ -34,6 +34,7 @@ const mongodb = mongoose.connection;
 
 
 const db = firestore.firestore();
+console.log(process.env.MONGO_DB);
 
 app.use(express.json());
 app.use(favicon(path.join(__dirname, './public', 'favicon.ico')));
@@ -61,17 +62,6 @@ function socket() {
     io.on('connection', (socket) => {
         console.log('socekt ID' + socket.id);
         socket.on('userID', id => {
-            // async function updateUserSocketID() {
-            //     const snapshot = await db.collection("users").where("id", "==", `${id}`).get();
-            //     if (snapshot.empty) {
-            //         console.log("no data");
-            //     }
-            //     // console.log(snapshot);
-            //     snapshot.forEach(doc => {
-            //         db.collection("users").doc(doc.id).update({
-            //             "socketID": `${socket.id}`
-            //         });
-
             socket.on('song', (blob) => {
                 console.log(blob);
                 const buffer = blob;

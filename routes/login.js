@@ -40,7 +40,8 @@ router.post('/',
                     res.redirect('/shazam/?id=' + doc.data().id);
                 }
                 else {
-                    res.send('<h1>Invalid password</h1');
+                    // res.send('<h1>Invalid password</h1');
+                    console.log('invalid password');
                 }
             }
             checkUserIndentification();

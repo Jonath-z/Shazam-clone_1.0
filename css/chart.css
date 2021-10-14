@@ -185,3 +185,97 @@ body{
         font-size: 30px;
     }
 }
+@media(min-width:1500px)
+{
+   body{
+    position: absolute;
+    width: 50%;
+    left: 30%;
+    right: 30%;
+   }
+   .chartDiv{
+    width: 200px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: rgb(31, 30, 30);
+    border-radius:10px ;
+    max-height: 260px;
+    min-height: 215px;
+}
+   .chartImage{
+    width: 200px;
+    border-radius: 10px;
+}
+.chartTitle{
+    padding-left: 10px;
+    font-family: sans-serif;
+    font-size: 10px;
+    color: white;
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.chartSubTitle{
+    font-size: 8px;
+    color: rgb(161, 161, 161);
+    overflow: hidden;
+    margin-top: -10px;
+    margin-left: 10px;
+    font-family: sans-serif;
+    max-width: 100px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+#chartTracksContainer{
+    padding-left: 20px;
+    margin-left: 20px;
+    margin-right: 0px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+}
+#chartH2{
+    color: white;
+    text-align: center;
+    margin-top: 10px;
+    font-family: sans-serif;
+}
+.optionSong,.optionLyrics,.optionArtist{
+    padding-top: 11px;
+    height: 30px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+.musicOption{
+    position: fixed;
+    width: 50%;
+    top: 0;
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    color: #ffffff;
+    z-index: 4;
+    /* background: linear-gradient(to bottom,black,rgba(0, 0, 0, 0)); */
+ }
+ /* .detailsContainer{
+    z-index: 1;
+    margin-top: 0;
+    position: fixed;
+    width: 50%;
+    bottom: 0;
+    top: 0;
+    background: linear-gradient(to top,black,rgba(20, 20, 20, 0));
+    color: white;
+    font-family: sans-serif;
+ }
+ .musicCover {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+} */
+}

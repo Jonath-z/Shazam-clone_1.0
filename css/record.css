@@ -128,3 +128,47 @@ h1{
         font-size: 40px;
     }
 }
+/****************************************** media queries ********************************************************/
+@media(min-width:1800px)
+{
+    #record{
+        width: 300px;
+        margin-top: 50px;
+    }
+    #noData{
+        display: none;
+        background-repeat: no-repeat;
+        backdrop-filter: blur(100px);
+        -webkit-backdrop-filter: blur(100px);
+        margin: 0;
+        padding: 0;
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        width: 50%;
+        z-index: 1;
+        left: 25%;
+        right: 25%;
+    }
+    
+    h1{
+        text-align: center;
+        margin-top: 10em;
+        color: white;
+        font-family: sans-serif;
+    }
+    
+    .tryButton{
+        text-align: center;
+    }
+    
+    #buttonTryAgain{
+        background:rgb(238, 44, 44);
+        color: white;
+        width: 15em;
+        height: 50px;
+        margin-top: 20px;
+        border-radius: 10px;
+        border: none;
+    }
+}

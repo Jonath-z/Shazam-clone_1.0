@@ -12,6 +12,14 @@ body,html{
     font-family: sans-serif;
     text-align: center;
 }
+.shazamlibrary{
+    width: 150px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background: rgb(31, 30, 30);
+    border-radius:10px ;
+    max-height: 251px;
+}
 .shazamContainer{
     padding-left: 20px;
     margin-left: 20px;
@@ -385,4 +393,92 @@ hr{
     .artistNameh4{
         font-size: 30px;
     }
+}
+
+/****************************************** media queries ********************************************************/
+@media(min-width:1500px)
+{
+   body{
+    position: absolute;
+    width: 40%;
+    left: 30%;
+    right: 30%;
+   }
+   .musicCover{
+    width: 200px;
+}
+.shazamlibrary{
+    width: 200px;
+    height: fit-content;
+    max-height: 600px;
+    margin-top: 20px;
+}
+.tileAndArtist{
+    padding-left: 10px;
+    font-size: 20px;
+    max-width: 300px;
+    max-height: 50px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.detailsContainer{
+    z-index: 1;
+    margin-top: 0;
+    position: fixed;
+    width: 50%;
+    bottom: 0;
+    top: 0;
+    background: linear-gradient(to top,black,rgba(20, 20, 20, 0));
+    color: white;
+    font-family: sans-serif;
+}
+#cover{
+    max-width: 50%;
+    min-height: 100%;
+    height: auto;
+    object-fit: cover;
+    margin-right: 50%;
+    /* margin-bottom: 20px; */
+    /* border-radius: 10px; */
+
+}
+.optionSong,.optionLyrics,.optionArtist{
+    padding-top: 11px;
+    height: 30px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+.musicOption{
+    position: fixed;
+    width: 50%;
+    top: 0;
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    justify-content: center;
+    align-items: center;
+    font-family: sans-serif;
+    color: #ffffff;
+    z-index: 4;
+    /* background: linear-gradient(to bottom,black,rgba(0, 0, 0, 0)); */
+ }
+.musicCoverSection{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+} 
+.musicDetails{
+    margin-top: 30em;
+    font-size: 20px;
+}
+#artistImage{
+    border-radius: 50%;
+    width: 200px;
+}
+
+#artistImg{
+    margin-right: 50%;
+    margin-top: 10em; 
+}
 }

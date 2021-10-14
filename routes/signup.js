@@ -39,7 +39,7 @@ router.post('/',
         const userData = {
             id:userID,
             email: email,
-            password: hashedPassword,
+            password: hashedPassword,   
             shazam: [],
             socketID:''
         }
